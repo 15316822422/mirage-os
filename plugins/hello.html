@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="mirage-plugin" content='{"id":"com.mirage.demo.hello","name":"插件示例","version":"2.0.0","author":"幻境 OS","description":"普通插件：沙箱运行，演示应用窗口、右键菜单、设置区块与命名空间存储。","mode":"sandbox","priority":10}'>
+<style data-mirage-plugin>
+  /* 这段 CSS 只会注入插件自己的窗口 / 设置区块，不会影响系统界面 */
+  .hello-wrap{padding:26px;font:14px/1.7 system-ui,-apple-system,"PingFang SC",sans-serif;color:var(--ui-text,#e8eaf2)}
+  .hello-wrap h2{margin:0 0 6px;font-size:19px}
+  .hello-wrap p{margin:0 0 4px;opacity:.72;max-width:52ch}
+  .hello-row{display:flex;gap:12px;align-items:center;margin-top:16px;flex-wrap:wrap}
+  .hello-count{font:600 30px/1 ui-monospace,SFMono-Regular,monospace;color:#6c8cff}
+  .hello-btn{padding:8px 14px;border-radius:9px;border:1px solid rgba(108,140,255,.4);background:rgba(108,140,255,.16);color:inherit;cursor:pointer;font:inherit}
+  .hello-btn:hover{background:rgba(108,140,255,.28)}
+  .hello-note{font-size:11px;opacity:.55;margin-top:20px;line-height:1.7}
+  .hello-chip{display:inline-block;padding:1px 7px;border-radius:6px;background:rgba(56,189,248,.14);border:1px solid rgba(56,189,248,.3);color:#7dd3fc;font-size:10.5px}
+</style>
+</head>
+<body>
+<script data-mirage-plugin>
+/*
+ * 普通插件（mode: "sandbox"）
+ * ------------------------------------------------------------------
+ * 这段代码运行在一个 sandbox iframe 里，没有 allow-same-origin：
+ *   - 拿不到宿主的 document / localStorage / IndexedDB
+ *   - 也不能把函数传给宿主（跨窗口只能传结构化数据）
+ * 所以 UI 一律用「render() 返回 HTML 字符串」，交互用 data-mirage-action 标记，
+ * 宿主把点击事件回传给 onAction()。
+ */
+
+let clicks = 0;
+
+/* 渲染函数可以是 async：桥接层会等 Promise 完成再取 HTML */
+async function renderView() {
+  clicks = Number(await Mirage.storage.get('clicks', 0)) || 0;
+  return (
+    '<div class="hello-wrap">' +
+      '<h2>来自沙箱插件</h2>' +
+      '<p>这个窗口的 HTML 由插件返回，显示在独立 iframe 中。插件读不到宿主 DOM，也拿不到 localStorage。</p>' +
+      '<p><span class="hello-chip">sandbox</span> 只能通过 Mirage.* 这一层 RPC 与系统交互。</p>' +
+      '<div class="hello-row"><span class="hello-count">' + clicks + '</span><span>次点击</span></div>' +
+      '<div class="hello-row">' +
+        '<button class="hello-btn" data-mirage-action="inc">点一下</button>' +
+        '<button class="hello-btn" data-mirage-action="settings">打开系统设置</button>' +
+        '<button class="hello-btn" data-mirage-action="toast">弹一条通知</button>' +
+      '</div>' +
+      '<div class="hello-note">计数保存在宿主代理的命名空间存储里：<br>' +
+        'mirage.plugin.com.mirage.demo.hello.clicks</div>' +
+    '</div>'
+  );
+}
+
+const app = Mirage.app({
+  id: 'hello',
+  name: '插件示例',
+  sub: '沙箱 · 无宿主权限',
+  icon: 'spark',
+  desktop: true,
+  w: 720,
+  h: 520,
+  render: renderView,
+  async onAction(action) {
+    if (action === 'inc') {
+      clicks += 1;
+      await Mirage.storage.set('clicks', clicks);
+      await Mirage.setView(app.key, await renderView());
+      return;
+    }
+    if (action === 'settings') {
+      await Mirage.openApp('settings');
+      return;
+    }
+    if (action === 'toast') {
+      Mirage.toast('这条通知由沙箱插件请求，宿主负责显示', 'success');
+    }
+  }
+});
+
+/* 右键菜单：宿主点击后发 menu 事件 */
+Mirage.menuItem({ id: 'open', label: '打开插件示例', icon: 'spark' });
+Mirage.on('menu', (detail) => {
+  if (detail.id === 'open') app.open();
+});
+
+/* 设置区块：宿主用另一个沙箱 iframe 渲染这段 HTML */
+Mirage.settingsSection({
+  id: 'about',
+  title: '插件示例',
+  desc: '这一段由沙箱插件渲染，同样拿不到宿主 DOM。',
+  height: 72,
+  render() {
+    return '<div style="padding:10px 12px;font-size:12px;line-height:1.7">' +
+      '运行模式：<b>sandbox</b> · 点击次数：<b>' + clicks + '</b><br>' +
+      '<span style="opacity:.6">插件无法读取系统设置、笔记或其他插件的数据。</span></div>';
+  }
+});
+
+/* 跟随系统主题变化重新渲染窗口 */
+Mirage.on('theme-changed', () => {
+  if (app) Mirage.setView(app.key, renderView());
+});
+</script>
+</body>
+</html>

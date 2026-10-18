@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "plugins": [
+    { "src": "plugins/hello.html", "enabled": true },
+    { "src": "plugins/clock.html", "enabled": false },
+    { "src": "plugins/kernel-demo.html", "enabled": false }
+  ]
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>瓷白 · Porcelain</title>
+<script type="application/json" id="mirage-skin-manifest">
+{
+  "id": "porcelain",
+  "name": "瓷白",
+  "author": "幻境 OS 模板",
+  "version": "1.0",
+  "description": "浅色、纸面、无模糊。用细描边和留白代替玻璃与投影。",
+  "theme": "light",
+  "accent": "#1f6f5c"
+}
+</script>
+<style data-mirage-skin>
+/* ---------------------------------------------------------------
+   瓷白 / Porcelain
+   设计意图：把「玻璃」换成「纸」。取消模糊与半透明叠加，
+   用 1px 描边、纯白卡片和大量留白建立层级。
+   --------------------------------------------------------------- */
+:root{
+  --ui-bg:#eef0f3;
+  --ui-surface:rgba(255,255,255,.92);
+  --ui-surface-2:rgba(255,255,255,.96);
+  --ui-surface-3:#ffffff;
+  --ui-body:#ffffff;
+  --ui-elev:rgba(17,24,39,.035);
+  --ui-elev-2:rgba(17,24,39,.075);
+  --ui-border:rgba(17,24,39,.13);
+  --ui-border-soft:rgba(17,24,39,.075);
+  --ui-track:rgba(17,24,39,.14);
+  --ui-text:#14181f;
+  --ui-dim:#5c6472;
+  --ui-dim-2:#8a919d;
+  --ui-accent:#1f6f5c;
+  --ui-accent-rgb:31,111,92;
+  --ui-ink:#ffffff;
+  --ui-radius:8px;
+  --ui-radius-sm:6px;
+  --ui-radius-lg:10px;
+  --ui-blur:0px;
+  --ui-blur-lg:0px;
+  --ui-shadow:0 1px 2px rgba(17,24,39,.06),0 22px 50px -32px rgba(17,24,39,.45);
+  --ui-shadow-sm:0 1px 2px rgba(17,24,39,.08);
+  --ui-scrim:rgba(20,26,36,.28);
+  --ui-taskbar-h:52px;
+}
+
+html[data-skin="porcelain"] #wallpaper{background:#eef0f3}
+html[data-skin="porcelain"] #wallpaper .w-blob,
+html[data-skin="porcelain"] #wallpaper .w-stars,
+html[data-skin="porcelain"] #wallpaper .w-vignette{display:none}
+html[data-skin="porcelain"] #wallpaper .w-grid{
+  opacity:.55;
+  background-image:linear-gradient(rgba(17,24,39,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,24,39,.05) 1px,transparent 1px);
+  background-size:56px 56px;
+}
+
+/* 桌面：无底片，纯线条 */
+.d-icon{border-radius:8px;height:108px}
+.d-icon:hover{background:rgba(17,24,39,.045);border-color:transparent}
+.d-icon.sel{background:rgba(31,111,92,.09);border-color:rgba(31,111,92,.28)}
+.d-icon-label{background:transparent;color:#14181f;backdrop-filter:none;-webkit-backdrop-filter:none;font-size:11.5px;letter-spacing:.01em}
+.d-icon-art{background:#fff;border:1px solid rgba(17,24,39,.10);color:#1f6f5c;border-radius:8px}
+.d-icon-art .letter{font-weight:500}
+
+/* 窗口：纸卡片 */
+.win{border-radius:10px;backdrop-filter:none;-webkit-backdrop-filter:none}
+.win.active{border-color:rgba(31,111,92,.32);box-shadow:var(--ui-shadow),0 0 0 1px rgba(31,111,92,.10)}
+.win-titlebar{height:40px;border-bottom:1px solid rgba(17,24,39,.08)}
+.win-title{font-size:12px;letter-spacing:.02em;color:#3d4551}
+.win-title .t-art{background:#f4f6f8;border:1px solid rgba(17,24,39,.09);color:#1f6f5c;border-radius:4px}
+.win-body{background:#fff}
+.win-btn{border-radius:5px;color:#7b8492}
+.win-btn:hover{background:rgba(17,24,39,.06);color:#14181f}
+.win-btn.close:hover{background:#fdecec;color:#b3261e}
+
+/* 任务栏 */
+#taskbar{background:rgba(255,255,255,.88);border-top:1px solid rgba(17,24,39,.09)}
+#start-btn .tb-glyph{background:#14181f;border-color:#14181f;color:#fff;border-radius:8px}
+#start-btn:hover .tb-glyph{background:#242b35}
+.tb-btn .tb-glyph{background:#fff;border:1px solid rgba(17,24,39,.10);color:#1f6f5c;border-radius:7px}
+.tb-btn.active{background:rgba(17,24,39,.05)}
+.tb-btn.active::after{background:#1f6f5c}
+.tb-btn.running::after{background:#b9c0cb}
+
+/* 开始菜单 */
+#start{border-radius:12px}
+.start-search{border-radius:6px;background:#f5f6f8}
+.start-app{border-radius:6px}
+.start-app:hover{background:#f4f6f8;border-color:transparent}
+.start-app .art{background:#fff;border:1px solid rgba(17,24,39,.10);color:#1f6f5c;border-radius:7px}
+.start-foot{background:#fafbfc}
+.start-user .av{background:#eef4f2;border-color:rgba(31,111,92,.22);color:#1f6f5c}
+
+/* 菜单与弹窗 */
+#ctx{border-radius:8px}
+.dialog{border-radius:12px}
+
+/* 按钮 */
+.btn{border-radius:6px;font-weight:500}
+.btn.primary{background:#1f6f5c;color:#fff}
+.btn.primary:hover{filter:brightness(1.06);background:#1f6f5c}
+.btn.danger{color:#b3261e;border-color:rgba(179,38,30,.24);background:#fdf3f2}
+
+/* 排版：标题用衬线，正文保持无衬线 */
+.welcome h1,.about h1,.skin-hero h2,.files-head h2{font-family:"Songti SC","Source Han Serif SC",Georgia,"Times New Roman",serif;font-weight:600;letter-spacing:0}
+.welcome{background:none}
+.welcome .mark{background:#14181f;border-color:#14181f;color:#fff}
+.step,.stat,.set-card,.skin-card{background:#fff;border-color:rgba(17,24,39,.09)}
+.step b{color:#1f6f5c;letter-spacing:.16em}
+.chip{border-radius:4px;background:#fff}
+
+/* 皮肤自身的管理页保持克制 */
+.badge{border-radius:4px;background:#fff}
+.badge.on{background:#eef4f2;border-color:rgba(31,111,92,.24);color:#14181f}
+.skin-item{border-radius:6px;background:#fff}
+.skin-drop{border-radius:8px;background:#fafbfc}
+.code-box{background:#f7f8fa;border-radius:6px}
+</style>
+</head>
+<body></body>
+</html>

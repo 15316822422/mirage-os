@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="mirage-plugin" content='{"id":"com.mirage.demo.clock","name":"任务栏时钟","version":"2.0.0","author":"幻境 OS","description":"沙箱插件：在任务栏注入一个带秒的时钟，点击打开大时钟窗口。","mode":"sandbox","priority":20}'>
+<style data-mirage-plugin>
+  .demo-clock{display:flex;align-items:center;gap:7px;height:34px;padding:0 4px;font-family:var(--ui-mono,ui-monospace,monospace);font-size:11px;letter-spacing:.04em;cursor:pointer;white-space:nowrap}
+  .demo-clock .dot{width:5px;height:5px;border-radius:50%;background:#34d399;box-shadow:0 0 0 3px rgba(52,211,153,.14)}
+  .clock-app{height:100%;display:grid;place-items:center;padding:24px;text-align:center;font-family:system-ui,sans-serif}
+  .clock-app .big{font-family:var(--ui-mono,ui-monospace,monospace);font-size:64px;font-weight:300;letter-spacing:.02em;line-height:1}
+  .clock-app .date{margin-top:12px;font-size:12px;color:var(--ui-dim,#9aa3b8)}
+  .clock-app .tip{margin-top:26px;font-size:11px;color:var(--ui-dim,#9aa3b8);opacity:.7}
+</style>
+</head>
+<body>
+<script data-mirage-plugin>
+/*
+ * 普通插件（沙箱）——任务栏组件示例。
+ *
+ * 任务栏组件和窗口一样，都是宿主创建的一个小 sandbox iframe：
+ *   render() 返回的 HTML 会被写进 iframe，里面的 <script> 可以正常执行，
+ *   但它同样拿不到宿主 DOM，只能在这个小框里自娱自乐。
+ */
+
+/* 任务栏组件：宽度 128，高度 34 */
+Mirage.widget({
+  id: 'clock',
+  width: 128,
+  height: 34,
+  title: '插件时钟',
+  render() {
+    return (
+      '<div class="demo-clock" data-mirage-action="open">' +
+        '<span class="dot"></span><span id="t">--:--:--</span>' +
+        '<scr' + 'ipt>' +
+          '(function(){' +
+            'function pad(n){return n<10?"0"+n:""+n;}' +
+            'function tick(){' +
+              'var d=new Date();' +
+              'var el=document.getElementById("t");' +
+              'if(el)el.textContent=pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());' +
+            '}' +
+            'tick();setInterval(tick,1000);' +
+          '})();' +
+        '</scr' + 'ipt>' +
+      '</div>'
+    );
+  }
+});
+
+/* 大时钟窗口 */
+const app = Mirage.app({
+  id: 'bigclock',
+  name: '大时钟',
+  icon: 'calendar',
+  w: 560,
+  h: 380,
+  hidden: true,
+  render() {
+    return (
+      '<div class="clock-app">' +
+        '<div><div class="big" id="big">--:--:--</div><div class="date" id="date"></div>' +
+        '<div class="tip">由沙箱插件渲染 · 每秒自动刷新</div></div>' +
+        '<scr' + 'ipt>' +
+          '(function(){' +
+            'function pad(n){return n<10?"0"+n:""+n;}' +
+            'function tick(){' +
+              'var d=new Date();' +
+              'var big=document.getElementById("big"),date=document.getElementById("date");' +
+              'if(big)big.textContent=pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());' +
+              'if(date)date.textContent=d.getFullYear()+" 年 "+(d.getMonth()+1)+" 月 "+d.getDate()+" 日 · 星期"+"日一二三四五六"[d.getDay()];' +
+            '}' +
+            'tick();setInterval(tick,1000);' +
+          '})();' +
+        '</scr' + 'ipt>' +
+      '</div>'
+    );
+  }
+});
+
+/* 点击任务栏组件 → 打开大时钟 */
+Mirage.on('action', (detail) => {
+  if (detail.key === 'widget:clock' && detail.action === 'open') app.open();
+});
+</script>
+</body>
+</html>

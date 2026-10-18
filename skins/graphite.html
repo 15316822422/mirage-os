@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>石墨 · Graphite</title>
+<script type="application/json" id="mirage-skin-manifest">
+{
+  "id": "graphite",
+  "name": "石墨",
+  "author": "幻境 OS 模板",
+  "version": "1.0",
+  "description": "暖灰、直角、无模糊。用分层灰阶与一条琥珀强调色替代玻璃。",
+  "theme": "dark",
+  "accent": "#e0a15a"
+}
+</script>
+<style data-mirage-skin>
+/* ---------------------------------------------------------------
+   石墨 / Graphite
+   设计意图：完全不透明，靠灰阶层次区分前后关系。
+   适合长时间阅读与低性能设备（无 backdrop-filter）。
+   --------------------------------------------------------------- */
+:root{
+  --ui-bg:#141414;
+  --ui-surface:#1c1c1c;
+  --ui-surface-2:#202020;
+  --ui-surface-3:#262626;
+  --ui-body:#181818;
+  --ui-elev:#242424;
+  --ui-elev-2:#2e2e2e;
+  --ui-border:#333333;
+  --ui-border-soft:#2a2a2a;
+  --ui-track:#3a3a3a;
+  --ui-text:#eceae6;
+  --ui-dim:#a09b93;
+  --ui-dim-2:#76716a;
+  --ui-accent:#e0a15a;
+  --ui-accent-rgb:224,161,90;
+  --ui-ink:#1a1206;
+  --ui-radius:2px;
+  --ui-radius-sm:2px;
+  --ui-radius-lg:3px;
+  --ui-blur:0px;
+  --ui-blur-lg:0px;
+  --ui-shadow:0 1px 0 rgba(255,255,255,.04),0 26px 60px -34px rgba(0,0,0,.95);
+  --ui-shadow-sm:0 1px 0 rgba(255,255,255,.04);
+  --ui-scrim:rgba(8,8,8,.72);
+  --ui-taskbar-h:50px;
+}
+
+html[data-skin="graphite"] #wallpaper{background:#141414}
+html[data-skin="graphite"] #wallpaper .w-blob{display:none}
+html[data-skin="graphite"] #wallpaper .w-stars{display:none}
+html[data-skin="graphite"] #wallpaper .w-grid{
+  opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+html[data-skin="graphite"] #wallpaper .w-vignette{background:radial-gradient(120% 110% at 50% 16%,transparent 52%,rgba(0,0,0,.5) 100%)}
+
+/* 桌面 */
+.d-icon{border-radius:2px;height:108px}
+.d-icon:hover{background:#1e1e1e;border-color:#2e2e2e}
+.d-icon.sel{background:#262019;border-color:rgba(224,161,90,.4)}
+.d-icon-label{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;color:#d8d4cd;font-size:11.5px}
+.d-icon-art{background:#202020;border:1px solid #333;color:#c8c3bb;border-radius:2px}
+.d-icon-art .letter{font-weight:500}
+
+/* 窗口 */
+.win{border-radius:3px;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:var(--ui-shadow)}
+.win.active{border-color:#4a4a4a;box-shadow:var(--ui-shadow),0 0 0 1px rgba(224,161,90,.18)}
+.win-titlebar{height:38px;background:#1f1f1f;border-bottom:1px solid #2c2c2c}
+.win-title{font-size:12px;color:#cfcac2;letter-spacing:.02em}
+.win-title .t-art{background:#262626;border:1px solid #383838;color:#c8c3bb;border-radius:1px}
+.win-body{background:#181818}
+.win-btn{border-radius:1px}
+.win-btn:hover{background:#2e2e2e;color:#eceae6}
+.win-btn.close:hover{background:#4a2420;color:#f0a099}
+
+/* 任务栏 */
+#taskbar{background:#1c1c1c;border-top:1px solid #2c2c2c}
+#start-btn .tb-glyph{background:#e0a15a;border-color:#e0a15a;color:#1a1206;border-radius:1px}
+.tb-btn .tb-glyph{background:#232323;border:1px solid #343434;color:#c8c3bb;border-radius:1px}
+.tb-btn.active{background:#2a2a2a}
+.tb-btn.active::after{background:#e0a15a}
+
+/* 开始菜单与弹层 */
+#start{border-radius:3px;background:#202020}
+.start-search{border-radius:2px;background:#282828;border-color:#343434}
+.start-app{border-radius:2px}
+.start-app:hover{background:#282828;border-color:#343434}
+.start-app .art{background:#262626;border:1px solid #343434;color:#c8c3bb;border-radius:1px}
+.start-foot{background:#1d1d1d;border-top:1px solid #2c2c2c}
+.start-user .av{background:#2a231a;border-color:rgba(224,161,90,.3);color:#e0a15a}
+#ctx,.dialog{border-radius:3px}
+.toast{border-radius:2px}
+
+/* 按钮 */
+.btn{border-radius:2px}
+.btn.primary{background:#e0a15a;color:#1a1206;font-weight:600}
+.btn.primary:hover{filter:brightness(1.06);background:#e0a15a}
+.btn.danger{color:#f0a099;border-color:rgba(240,160,153,.26);background:rgba(240,160,153,.08)}
+.seg,.seg button,.toggle,.toggle::after{border-radius:1px}
+
+/* 细节：去掉一切圆润感 */
+.d-icon-art,.start-app .art,.file-row .art,.tb-btn .tb-glyph,.win-title .t-art{border-radius:1px}
+.step,.stat,.set-card,.skin-card,.skin-item,.skin-drop,.code-box,.chip,.badge{border-radius:2px}
+.welcome{background:none}
+.welcome .mark{background:#262626;border-color:#383838;color:#e0a15a;border-radius:2px}
+.skin-hero .mk{background:#2a231a;border-color:rgba(224,161,90,.3);color:#e0a15a;border-radius:2px}
+</style>
+</head>
+<body></body>
+</html>

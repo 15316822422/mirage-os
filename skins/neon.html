@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>霓虹 · Neon</title>
+<script type="application/json" id="mirage-skin-manifest">
+{
+  "id": "neon",
+  "name": "霓虹",
+  "author": "幻境 OS 模板",
+  "version": "1.0",
+  "description": "近黑底 + 荧光绿，锐角、细描边、等宽标签。",
+  "theme": "dark",
+  "accent": "#c6ff4a"
+}
+</script>
+<style data-mirage-skin>
+/* ---------------------------------------------------------------
+   霓虹 / Neon
+   设计意图：把圆角收到最小，用荧光描边和等宽字建立「仪表盘」感。
+   --------------------------------------------------------------- */
+:root{
+  --ui-bg:#05070a;
+  --ui-surface:rgba(9,13,11,.70);
+  --ui-surface-2:rgba(10,16,12,.84);
+  --ui-surface-3:rgba(12,20,15,.92);
+  --ui-body:rgba(5,9,7,.72);
+  --ui-elev:rgba(198,255,74,.055);
+  --ui-elev-2:rgba(198,255,74,.11);
+  --ui-border:rgba(198,255,74,.20);
+  --ui-border-soft:rgba(198,255,74,.09);
+  --ui-track:rgba(198,255,74,.16);
+  --ui-text:#e9ffd2;
+  --ui-dim:#93b07c;
+  --ui-dim-2:#61784f;
+  --ui-accent:#c6ff4a;
+  --ui-accent-rgb:198,255,74;
+  --ui-ink:#0a0f04;
+  --ui-radius:3px;
+  --ui-radius-sm:2px;
+  --ui-radius-lg:4px;
+  --ui-blur:10px;
+  --ui-blur-lg:14px;
+  --ui-shadow:0 0 0 1px rgba(198,255,74,.07),0 30px 70px -36px rgba(0,0,0,.95);
+  --ui-shadow-sm:0 0 0 1px rgba(198,255,74,.06);
+  --ui-scrim:rgba(2,4,3,.66);
+  --ui-taskbar-h:50px;
+}
+
+html[data-skin="neon"] #wallpaper{background:#05070a}
+html[data-skin="neon"] #wallpaper .w-blob{opacity:.16;filter:blur(110px)}
+html[data-skin="neon"] #wallpaper .b1{background:radial-gradient(circle,#1d6b3a,transparent 64%)}
+html[data-skin="neon"] #wallpaper .b2{background:radial-gradient(circle,#0a5f5a,transparent 64%)}
+html[data-skin="neon"] #wallpaper .b3{background:radial-gradient(circle,#3c5c10,transparent 66%)}
+html[data-skin="neon"] #wallpaper .w-grid{opacity:.35;background-image:linear-gradient(rgba(198,255,74,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(198,255,74,.10) 1px,transparent 1px);background-size:38px 38px}
+html[data-skin="neon"] #wallpaper .w-vignette{background:radial-gradient(120% 110% at 50% 20%,transparent 45%,rgba(0,0,0,.6) 100%)}
+
+/* 桌面 */
+.d-icon{border-radius:3px;height:108px}
+.d-icon:hover{background:rgba(198,255,74,.07);border-color:rgba(198,255,74,.18)}
+.d-icon.sel{background:rgba(198,255,74,.10);border-color:rgba(198,255,74,.45)}
+.d-icon-label{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;font-size:10.5px;letter-spacing:.12em;color:#cfe6b8}
+.d-icon-art{background:rgba(198,255,74,.06);border:1px solid rgba(198,255,74,.28);color:#c6ff4a;border-radius:3px}
+.d-icon-art .letter{font-weight:400}
+
+/* 窗口 */
+.win{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.win.active{border-color:rgba(198,255,74,.45);box-shadow:var(--ui-shadow),0 0 22px -8px rgba(198,255,74,.25)}
+.win-titlebar{height:38px;border-bottom:1px solid rgba(198,255,74,.14)}
+.win-title{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#c6ff4a}
+.win-title .t-art{background:transparent;border:1px solid rgba(198,255,74,.3);color:#c6ff4a;border-radius:2px}
+.win-btn{border-radius:2px}
+.win-btn:hover{background:rgba(198,255,74,.12);color:#c6ff4a}
+.win-btn.close:hover{background:rgba(255,90,80,.18);color:#ff8f86}
+
+/* 任务栏 */
+#taskbar{border-top:1px solid rgba(198,255,74,.22)}
+#start-btn .tb-glyph{background:rgba(198,255,74,.1);border:1px solid rgba(198,255,74,.4);color:#c6ff4a;border-radius:2px}
+.tb-btn .tb-glyph{background:rgba(198,255,74,.06);border:1px solid rgba(198,255,74,.22);color:#c6ff4a;border-radius:2px}
+.tb-btn.active{background:rgba(198,255,74,.1)}
+.tb-btn.active::after{background:#c6ff4a;box-shadow:0 0 8px #c6ff4a}
+#tb-clock .t{color:#c6ff4a;letter-spacing:.08em}
+
+/* 开始菜单与弹层 */
+#start{border-radius:4px}
+.start-search{border-radius:2px}
+.start-app{border-radius:2px}
+.start-app:hover{background:rgba(198,255,74,.08);border-color:rgba(198,255,74,.18)}
+.start-app .art{background:rgba(198,255,74,.06);border:1px solid rgba(198,255,74,.22);color:#c6ff4a;border-radius:2px}
+.start-label{letter-spacing:.16em}
+#ctx,.dialog{border-radius:4px}
+.toast{border-radius:3px}
+
+/* 按钮与表单 */
+.btn{border-radius:2px;letter-spacing:.04em}
+.btn.primary{background:#c6ff4a;color:#0a0f04;font-weight:700}
+.btn.primary:hover{filter:brightness(1.08);background:#c6ff4a}
+.btn.danger{color:#ff8f86;border-color:rgba(255,90,80,.3);background:rgba(255,90,80,.08)}
+.seg{border-radius:2px}
+.seg button{border-radius:1px}
+.toggle{border-radius:2px}
+.toggle::after{border-radius:1px}
+
+/* 排版 */
+.skin-hero h2,.files-head h2,.welcome h1,.about h1{letter-spacing:.02em}
+.step b{letter-spacing:.2em}
+.chip{border-radius:2px}
+.badge{border-radius:2px}
+.skin-item,.skin-drop,.code-box{border-radius:3px}
+.set-card{border-radius:3px}
+</style>
+</head>
+<body></body>
+</html>

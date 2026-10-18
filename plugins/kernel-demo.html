@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="mirage-plugin" content='{"id":"com.mirage.demo.kernel","name":"内核观测台","version":"2.0.0","author":"幻境 OS","description":"高级插件：拦截 openApp、记录调用历史、给窗口加全局样式。需要授权后运行。","mode":"advanced","permissions":["kernel","dom","storage"],"crashPolicy":"disable","priority":30}'>
+<style data-mirage-plugin>
+  body.kernel-demo-on .win{border-color:rgba(52,211,153,.45)!important}
+  .kd{height:100%;display:flex;flex-direction:column;gap:12px;padding:24px 26px;font-size:12px;line-height:1.6;color:var(--ui-text)}
+  .kd h2{margin:0;font-size:19px}
+  .kd .sub{color:var(--ui-dim);font-size:11.5px}
+  .kd .ops{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+  .kd .log{flex:1;min-height:120px;overflow:auto;border:1px solid var(--ui-border-soft);border-radius:10px;background:var(--ui-elev);padding:10px 12px;font-family:var(--ui-mono);font-size:11px}
+  .kd .log div{padding:3px 0;border-bottom:1px solid var(--ui-border-soft);display:flex;gap:10px}
+  .kd .log div:last-child{border-bottom:0}
+  .kd .log b{color:#34d399;font-weight:500;min-width:110px}
+  .kd .log span{color:var(--ui-dim)}
+  .kd .badge{display:inline-block;padding:1px 7px;border-radius:6px;background:rgba(251,113,133,.12);border:1px solid rgba(251,113,133,.3);color:#fb7185;font-size:10.5px}
+</style>
+</head>
+<body>
+<script>
+/*
+ * 高级插件（mode: "advanced"）
+ * ------------------------------------------------------------------
+ * 这段代码由 new Function 直接在主页面上下文执行，与系统同权：
+ *   - 可以拿到真正的 document / window / localStorage
+ *   - 可以 ctx.kernel.override() 改写内核函数
+ *   - 不写心跳标记，不会被看门狗判定为「卡死」
+ *
+ * 代价是：没有任何隔离。安装时必须在插件中心逐项授权。
+ */
+Mirage.register({
+  id: 'com.mirage.demo.kernel',
+  name: '内核观测台',
+  version: '2.0.0',
+
+  start(ctx) {
+    /* 历史记录存在插件自己的命名空间里，重开系统也还在 */
+    const history = ctx.storage.get('history', []) || [];
+
+    const app = ctx.app({
+      id: 'kernel',
+      name: '内核观测台',
+      sub: '高级插件 · 全权限',
+      icon: 'shield',
+      desktop: true,
+      w: 780,
+      h: 560,
+      render(root) {
+        root.innerHTML =
+          '<div class="kd">' +
+            '<div><h2>内核观测台 <span class="badge">advanced</span></h2>' +
+              '<div class="sub">这个插件直接改写了 openApp：每次打开应用都会被记录。</div></div>' +
+            '<div class="ops">' +
+              '<button class="btn sm" data-kd="repaint">刷新列表</button>' +
+              '<button class="btn sm" data-kd="border">切换窗口描边</button>' +
+              '<button class="btn sm ghost" data-kd="clear">清空记录</button>' +
+            '</div>' +
+            '<div class="log" data-kd-log></div>' +
+            '<div class="sub">钩子链：插件的 fn(next, ...args) 会串行执行，调用 next() 才继续。</div>' +
+          '</div>';
+
+        const log = root.querySelector('[data-kd-log]');
+        const paint = () => {
+          log.innerHTML = history.length
+            ? history.slice(0, 40).map((item) =>
+                '<div><b>' + item.key + '</b><span>' + new Date(item.ts).toLocaleTimeString('zh-CN') + '</span></div>'
+              ).join('')
+            : '<div style="border:0;color:var(--ui-dim)">还没有记录，去打开几个应用试试。</div>';
+        };
+        paint();
+
+        root.querySelector('[data-kd="repaint"]').addEventListener('click', paint);
+        root.querySelector('[data-kd="border"]').addEventListener('click', () => {
+          document.body.classList.toggle('kernel-demo-on');
+        });
+        root.querySelector('[data-kd="clear"]').addEventListener('click', () => {
+          history.length = 0;
+          ctx.storage.set('history', []);
+          paint();
+        });
+      }
+    });
+
+    /*
+     * 内核钩子：把 openApp 包一层。
+     * 注意要先 push 再调用 next()，否则记录顺序会反。
+     */
+    ctx.kernel.override('openApp', (next, key) => {
+      history.unshift({ key: String(key), ts: Date.now() });
+      if (history.length > 60) history.length = 60;
+      ctx.storage.set('history', history);
+      return next(key);
+    });
+
+    /* 全局样式 + 全局 class：这是高级插件才有的能力 */
+    ctx.css('body.kernel-demo-ready .d-icon[data-key="plugins"] .d-icon-art{box-shadow:0 0 0 2px rgba(251,113,133,.45)}');
+    document.body.classList.add('kernel-demo-ready');
+    ctx.cleanup(() => document.body.classList.remove('kernel-demo-ready', 'kernel-demo-on'));
+
+    /* 系统级查询：列出当前所有插件 */
+    const info = ctx.advanced.system.listPlugins();
+    ctx.log('当前插件数量：' + info.length);
+  },
+
+  stop(ctx) {
+    ctx.log('内核观测台已停止');
+  }
+});
+</script>
+</body>
+</html>
