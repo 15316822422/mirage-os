@@ -152,6 +152,24 @@ svg{display:block}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:99px;border:3px solid transparent;background-clip:content-box}
 [data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(60,72,40,.22);border:3px solid transparent;background-clip:content-box}
+
+/* 浅色模式：图标底片翻成白底+彩色字，让深浅色图标差异明显 */
+[data-theme="light"] .d-icon-art,
+[data-theme="light"] .win-title .t-art,
+[data-theme="light"] .tb-btn .tb-glyph,
+[data-theme="light"] .start-app .art,
+[data-theme="light"] .file-row .art,
+[data-theme="light"] .plug-row .mk{
+  background:rgba(255,255,255,.92);
+  border-color:rgba(60,72,40,.14);
+  color:hsl(var(--h,120) 55% 32%);
+}
+[data-theme="light"] .d-icon-art img,
+[data-theme="light"] .win-title .t-art img,
+[data-theme="light"] .tb-btn .tb-glyph img,
+[data-theme="light"] .start-app .art img,
+[data-theme="light"] .file-row .art img{border-radius:inherit}
+
 body.is-dragging,body.is-dragging *{cursor:grabbing!important}
 body.is-resizing,body.is-resizing *{cursor:default!important}
 
@@ -263,7 +281,7 @@ body.is-resizing,body.is-resizing *{cursor:default!important}
 .spinner{width:24px;height:24px;border-radius:50%;border:2px solid var(--ui-track);border-top-color:var(--ui-accent);animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes winIn{from{opacity:0;transform:scale(.98) translateY(8px)}to{opacity:1;transform:none}}
-@keyframes winOut{to{opacity:0;transform:scale(.985) translateY(4px)}}
+@keyframes winOut{to{opacity:0;transform:scale(.12) translateY(8px)}}
 .rz{position:absolute;z-index:6;touch-action:none}
 .rz[data-dir="n"]{top:0;left:12px;right:12px;height:6px;cursor:ns-resize}
 .rz[data-dir="s"]{bottom:0;left:12px;right:12px;height:6px;cursor:ns-resize}
@@ -396,11 +414,14 @@ body.is-resizing,body.is-resizing *{cursor:default!important}
 
 /* ============================ 拖放 ============================ */
 #dropzone{position:fixed;inset:10px;z-index:95;border-radius:var(--ui-radius-lg);border:1px dashed rgba(var(--ui-accent-rgb),.55);background:rgba(6,10,20,.42);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity var(--ui-dur);color:#fff}
+[data-theme="light"] #dropzone{background:rgba(255,255,255,.55);color:var(--ui-text)}
 #dropzone.show{opacity:1}
 .drop-inner{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;padding:20px}
 .drop-inner .dic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:rgba(var(--ui-accent-rgb),.16);border:1px solid rgba(var(--ui-accent-rgb),.32);margin-bottom:7px;color:#fff}
+[data-theme="light"] .drop-inner .dic{color:var(--ui-accent)}
 .drop-inner b{font-size:15px}
 .drop-inner span{font-size:12px;color:rgba(255,255,255,.7)}
+[data-theme="light"] .drop-inner span{color:var(--ui-dim)}
 
 /* ============================ 应用容器 ============================ */
 .app{height:100%;overflow:auto;font-size:13px;color:var(--ui-text)}
@@ -450,7 +471,14 @@ body.is-resizing,body.is-resizing *{cursor:default!important}
 .seg button.on{background:var(--ui-elev-2);color:var(--ui-text)}
 .wp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
 .wp-opt{position:relative;height:66px;border-radius:10px;border:1px solid var(--ui-border);overflow:hidden;transition:border-color var(--ui-dur),box-shadow var(--ui-dur);background:#0b1020;cursor:pointer}
+[data-theme="light"] .wp-opt{background:#e8efd9}
+[data-theme="light"] .wp-opt.aurora{background:radial-gradient(circle at 30% 26%,#2d6bff,transparent 58%),radial-gradient(circle at 76% 70%,#00d4c8,transparent 55%),radial-gradient(circle at 60% 20%,#8b5cf6,transparent 50%),#070b16}
+[data-theme="light"] .wp-opt.dusk{background:radial-gradient(circle at 24% 24%,#ff7a45,transparent 58%),radial-gradient(circle at 76% 66%,#ff3d7f,transparent 55%),linear-gradient(150deg,#1a0b2e,#3b0d3a 60%,#0a0714)}
+[data-theme="light"] .wp-opt.ocean{background:radial-gradient(circle at 28% 24%,#00b8d4,transparent 58%),radial-gradient(circle at 78% 76%,#14e0a0,transparent 55%),linear-gradient(160deg,#03121f,#062b33)}
+[data-theme="light"] .wp-opt.nebula{background:radial-gradient(circle at 32% 30%,#5b21b6,transparent 60%),radial-gradient(circle at 72% 70%,#1d4ed8,transparent 58%),#05040d}
+[data-theme="light"] .wp-opt.mono{background:linear-gradient(150deg,#161b24,#0a0c11)}
 .wp-opt .wp-name{position:absolute;left:6px;bottom:5px;font-size:10px;color:#fff;background:rgba(0,0,0,.4);padding:1px 6px;border-radius:4px;backdrop-filter:blur(4px)}
+.wp-opt.matcha .wp-name{color:#3c4828;background:rgba(255,255,255,.55)}
 .wp-opt.on{border-color:rgba(var(--ui-accent-rgb),.7);box-shadow:0 0 0 2px rgba(var(--ui-accent-rgb),.18)}
 .wp-opt.aurora{background:radial-gradient(circle at 30% 26%,#2d6bff,transparent 58%),radial-gradient(circle at 76% 70%,#00d4c8,transparent 55%),radial-gradient(circle at 60% 20%,#8b5cf6,transparent 50%),#070b16}
 .wp-opt.dusk{background:radial-gradient(circle at 24% 24%,#ff7a45,transparent 58%),radial-gradient(circle at 76% 66%,#ff3d7f,transparent 55%),linear-gradient(150deg,#1a0b2e,#3b0d3a 60%,#0a0714)}
@@ -459,10 +487,12 @@ body.is-resizing,body.is-resizing *{cursor:default!important}
 .wp-opt.mono{background:linear-gradient(150deg,#161b24,#0a0c11);background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:12px 12px}
 .wp-opt.custom{background:linear-gradient(140deg,#334155,#0f172a)}
 .dots{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.dot{width:24px;height:24px;border-radius:50%;border:2px solid transparent;transition:transform .12s,box-shadow .12s;position:relative}
+.dot{width:24px;height:24px;border-radius:50%;border:2px solid transparent;transition:transform .12s,box-shadow .12s,border-color .12s;position:relative;cursor:pointer}
 .dot:hover{transform:scale(1.08)}
-.dot.on{border-color:rgba(255,255,255,.85);box-shadow:0 0 0 2px rgba(var(--ui-accent-rgb),.45)}
-[data-theme="light"] .dot.on{border-color:rgba(36,41,29,.55)}
+.dot.on{border-color:var(--ui-text);box-shadow:0 0 0 2px rgba(var(--ui-accent-rgb),.45),0 2px 6px -2px rgba(0,0,0,.30)}
+.dot.on::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--ui-text);opacity:.18}
+[data-theme="light"] .dot.on{border-color:#24291d;box-shadow:0 0 0 2px rgba(var(--ui-accent-rgb),.5),0 2px 5px -2px rgba(60,72,40,.30)}
+[data-theme="light"] .dot.on::after{background:#24291d;opacity:.16}
 .toggle{width:40px;height:23px;border-radius:99px;background:var(--ui-track);position:relative;transition:background var(--ui-dur);flex-shrink:0;cursor:pointer}
 .toggle::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform var(--ui-dur) var(--ui-ease);box-shadow:0 1px 3px rgba(0,0,0,.25)}
 .toggle.on{background:var(--ui-accent)}
@@ -2138,20 +2168,37 @@ function openAppImpl(key) {
 function closeWindowImpl(win) {
   if (!win || win.closing) return;
   win.closing = true;
-  if (typeof win.dispose === 'function') {
-    try { win.dispose(); } catch (err) {}
-  }
-  if (win.iframe) {
-    try { win.iframe.srcdoc = ''; } catch (err) {}
-  }
-  // 关闭动画：朝任务栏图标方向缩放飞去（与最小化视觉一致但更快、更收敛）
+  // 先捕获起始位置（在内容被清理之前，保证尺寸正确）
   const from = win.el.getBoundingClientRect();
+  // 定位任务栏图标作为缩放目标
   const selector = '.tb-btn[data-key="' + String(win.key).replace(/"/g, '\\"') + '"]';
   const button = document.querySelector(selector);
-  let closed = false;
+  // 让 scale 朝目标点收敛：transform-origin 指向目标方向
+  let originX = '50%', originY = '50%';
+  if (button) {
+    const to = button.getBoundingClientRect();
+    const cx = from.left + from.width / 2;
+    const cy = from.top + from.height / 2;
+    const tx = to.left + to.width / 2;
+    const ty = to.top + to.height / 2;
+    // origin 用百分比表示在窗口盒子上的位置，指向目标点
+    const ox = ((tx - from.left) / from.width) * 100;
+    const oy = ((ty - from.top) / from.height) * 100;
+    originX = (Math.max(0, Math.min(100, ox))).toFixed(1) + '%';
+    originY = (Math.max(0, Math.min(100, oy))).toFixed(1) + '%';
+  }
+  win.el.style.transformOrigin = originX + ' ' + originY;
+  let done = false;
   const finishClose = () => {
-    if (closed) return;
-    closed = true;
+    if (done) return;
+    done = true;
+    // 动画结束后才清理 iframe 与 DOM，避免动画过程中内容先消失
+    if (typeof win.dispose === 'function') {
+      try { win.dispose(); } catch (err) {}
+    }
+    if (win.iframe) {
+      try { win.iframe.srcdoc = ''; } catch (err) {}
+    }
     win.el.remove();
     state.windows.delete(win.key);
     if (state.activeKey === win.key) {
@@ -2173,14 +2220,19 @@ function closeWindowImpl(win) {
     const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
     const anim = win.el.animate([
       { transform: 'translate(0,0) scale(1)', opacity: 1 },
-      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.1)', opacity: 0 }
-    ], { duration: 180, easing: 'cubic-bezier(.4,0,.2,1)' });
+      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.08)', opacity: 0 }
+    ], { duration: 200, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
     anim.onfinish = finishClose;
     anim.oncancel = finishClose;
   } else {
-    // 兜底：没有对应任务栏图标（罕见），用中心微缩
-    win.el.classList.add('closing');
-    setTimeout(finishClose, 170);
+    // 兜底：无任务栏图标，向左下收缩（避免永远左上）
+    win.el.style.transformOrigin = '0% 100%';
+    const anim = win.el.animate([
+      { transform: 'translate(0,0) scale(1)', opacity: 1 },
+      { transform: 'translate(-8px,8px) scale(.12)', opacity: 0 }
+    ], { duration: 170, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
+    anim.onfinish = finishClose;
+    anim.oncancel = finishClose;
   }
 }
 
