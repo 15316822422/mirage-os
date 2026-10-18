@@ -22,6 +22,13 @@
 
 ## 快速开始
 
+两种拿法，按需要选：
+
+| 方式 | 适合 | 怎么做 |
+|---|---|---|
+| **压缩包** | 只想要一个能跑的目录 | 下 [`mirage-os-v2.2.0.zip`](https://github.com/15316822422/mirage-os/releases/latest)，解压即可 |
+| **克隆仓库** | 想改代码、跟进提交 | 见下面的命令 |
+
 ```bash
 # 1. 下载或克隆
 git clone https://github.com/15316822422/mirage-os.git
@@ -33,6 +40,8 @@ python3 -m http.server 8000
 # 3. 打开
 # http://localhost:8000
 ```
+
+压缩包里已经带好 `plugins/`、`skins/` 和文档，解压后同样起个服务就能看到插件自动加载。
 
 只想看看效果，直接双击 `index.html` 也行——只是浏览器不允许 `file://` 读目录，同目录的插件不会自动加载，手动导入即可。
 
@@ -109,6 +118,8 @@ python3 -m http.server 8000
 | v1.0.0 | 初版：窗口管理、桌面图标、导入网页、皮肤 | [`releases/`](releases/mirage-os-v1.0.0.html) |
 
 详细改动见 [CHANGELOG.md](CHANGELOG.md)。
+
+> 单文件适合直接双击运行；zip 适合想把插件、皮肤、文档一起拿走的情况。目前 zip 只提供最新版，历史版本只有单文件。
 
 ## 常见问题
 
