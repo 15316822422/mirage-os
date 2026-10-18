@@ -27,27 +27,27 @@ html{color-scheme:light;-webkit-text-size-adjust:100%}
   --ui-accent:var(--accent);
   --ui-accent-rgb:var(--accent-rgb);
 
-  /* —— 底层与表面 —— */
-  --ui-bg:#070910;
-  --ui-surface:rgba(20,25,35,.44);
-  --ui-surface-2:rgba(24,29,40,.68);
-  --ui-surface-3:rgba(30,36,48,.82);
-  --ui-body:rgba(9,12,19,.62);
-  --ui-elev:rgba(255,255,255,.05);
-  --ui-elev-2:rgba(255,255,255,.10);
-  --ui-border:rgba(255,255,255,.10);
-  --ui-border-soft:rgba(255,255,255,.06);
-  --ui-track:rgba(255,255,255,.10);
-  --tile-bg-a:.20;
-  --tile-border-a:.22;
-  --tile-ink-l:78%;
-  --label-bg:rgba(6,9,15,.30);
-  --label-ink:#e9edf5;
+  /* —— 底层与表面（深墨绿调，与浅色抹茶呼应） —— */
+  --ui-bg:#0a0d08;
+  --ui-surface:rgba(28,34,22,.50);
+  --ui-surface-2:rgba(34,41,26,.72);
+  --ui-surface-3:rgba(40,48,30,.86);
+  --ui-body:rgba(16,20,12,.68);
+  --ui-elev:rgba(200,220,170,.05);
+  --ui-elev-2:rgba(200,220,170,.10);
+  --ui-border:rgba(200,220,170,.11);
+  --ui-border-soft:rgba(200,220,170,.06);
+  --ui-track:rgba(200,220,170,.12);
+  --tile-bg-a:.22;
+  --tile-border-a:.24;
+  --tile-ink-l:80%;
+  --label-bg:rgba(14,18,10,.32);
+  --label-ink:#e4ead8;
 
-  /* —— 文字 —— */
-  --ui-text:#e9edf5;
-  --ui-dim:#98a2b5;
-  --ui-dim-2:#6f798b;
+  /* —— 文字（暖白偏绿） —— */
+  --ui-text:#e4ead8;
+  --ui-dim:#9aa888;
+  --ui-dim-2:#6f7d5e;
   --ui-ink:#ffffff;
 
   /* —— 形状 —— */
@@ -56,9 +56,9 @@ html{color-scheme:light;-webkit-text-size-adjust:100%}
   --ui-radius-lg:18px;
   --ui-blur:28px;
   --ui-blur-lg:40px;
-  --ui-shadow:0 26px 70px -30px rgba(0,0,0,.78);
-  --ui-shadow-sm:0 2px 10px -6px rgba(0,0,0,.45);
-  --ui-scrim:rgba(5,7,12,.52);
+  --ui-shadow:0 26px 70px -30px rgba(0,0,0,.80);
+  --ui-shadow-sm:0 2px 10px -6px rgba(0,0,0,.5);
+  --ui-scrim:rgba(8,10,6,.55);
 
   /* —— 排版与动效 —— */
   --ui-font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
@@ -67,10 +67,10 @@ html{color-scheme:light;-webkit-text-size-adjust:100%}
   --ui-dur:.18s;
   --ui-taskbar-h:56px;
 
-  /* —— 状态色 —— */
-  --danger:#ff6b6f;
-  --ok:#48d597;
-  --warn:#f2b34c;
+  /* —— 状态色（抹茶系） —— */
+  --danger:#c0554a;
+  --ok:#7a9450;
+  --warn:#a8b860;
 
   /* —— 兼容旧令牌（皮肤可继续使用旧变量名） —— */
   --taskbar-h:var(--ui-taskbar-h);
@@ -146,11 +146,11 @@ svg{display:block}
 :focus{outline:none}
 :focus-visible{outline:2px solid rgba(var(--ui-accent-rgb),.72);outline-offset:2px}
 ::selection{background:rgba(var(--ui-accent-rgb),.28)}
-*{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.16) transparent}
+*{scrollbar-width:thin;scrollbar-color:rgba(200,220,170,.18) transparent}
 [data-theme="light"] *{scrollbar-color:rgba(60,72,40,.24) transparent}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:99px;border:3px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb{background:rgba(200,220,170,.18);border-radius:99px;border:3px solid transparent;background-clip:content-box}
 [data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(60,72,40,.22);border:3px solid transparent;background-clip:content-box}
 
 /* 浅色模式：图标底片翻成白底+彩色字，让深浅色图标差异明显 */
@@ -590,16 +590,16 @@ kbd{display:inline-block;padding:2px 6px;border-radius:5px;border:1px solid var(
 .plug-row .acts{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0;max-width:190px}
 .plug-tag{font-size:9.5px;font-weight:500;letter-spacing:.02em;padding:2px 6px;border-radius:99px;border:1px solid var(--ui-border);color:var(--ui-dim);background:var(--ui-elev);white-space:nowrap}
 .plug-tag.on{border-color:rgba(var(--ui-accent-rgb),.34);background:rgba(var(--ui-accent-rgb),.1);color:var(--ui-text)}
-.plug-tag.warn{border-color:rgba(245,184,75,.4);background:rgba(245,184,75,.1);color:#f5b84b}
-.plug-tag.err{border-color:rgba(251,113,133,.4);background:rgba(251,113,133,.1);color:#fb7185}
-.plug-safe{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-radius:11px;border:1px solid rgba(245,184,75,.38);background:rgba(245,184,75,.08)}
+.plug-tag.warn{border-color:rgba(122,148,80,.4);background:rgba(122,148,80,.1);color:#7a9450}
+.plug-tag.err{border-color:rgba(192,85,74,.4);background:rgba(192,85,74,.1);color:#c0554a}
+.plug-safe{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-radius:11px;border:1px solid rgba(122,148,80,.38);background:rgba(122,148,80,.08)}
 .plug-safe b{font-size:12px}
 .plug-safe p{font-size:11px;color:var(--ui-dim);line-height:1.55;margin-top:3px}
 .plug-safe .acts{margin-left:auto;flex-shrink:0}
 .plug-log{display:flex;flex-direction:column;gap:4px;max-height:150px;overflow:auto}
 .plug-log .row{font-family:var(--ui-mono);font-size:10.5px;line-height:1.55;color:var(--ui-dim);padding:6px 8px;border-radius:7px;background:rgba(0,0,0,.18);overflow-wrap:anywhere}
 [data-theme="light"] .plug-log .row{background:rgba(60,72,40,.045)}
-.plug-log .row b{color:#fb7185;font-weight:500}
+.plug-log .row b{color:#c0554a;font-weight:500}
 .plug-editor{min-height:190px}
 .plug-hint{font-size:10.5px;color:var(--ui-dim);line-height:1.6}
 .plug-doc{display:flex;flex-direction:column;gap:6px}
@@ -630,15 +630,15 @@ kbd{display:inline-block;padding:2px 6px;border-radius:5px;border:1px solid var(
 
 
 /* ---------- 插件模式徽章 ---------- */
-.plug-tag.sbx{color:#7dd3fc;border-color:rgba(56,189,248,.32);background:rgba(56,189,248,.1)}
-.plug-tag.adv{color:#fb7185;border-color:rgba(251,113,133,.34);background:rgba(251,113,133,.12)}
+.plug-tag.sbx{color:#84a055;border-color:rgba(132,160,85,.32);background:rgba(132,160,85,.1)}
+.plug-tag.adv{color:#c0554a;border-color:rgba(192,85,74,.34);background:rgba(192,85,74,.12)}
 
 /* ---------- 权限授权弹窗 ---------- */
 .dialog .dialog-body{margin:10px 0 4px}
 .dialog:has(.perm-body){width:min(540px,94vw)}
 .perm-body{display:flex;flex-direction:column;gap:10px;max-height:52vh;overflow:auto;padding-right:2px}
-.perm-warn{display:flex;gap:9px;padding:10px 12px;border-radius:10px;background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.3);color:var(--ui-text)}
-.perm-warn svg{flex:0 0 auto;margin-top:2px;color:#fb7185}
+.perm-warn{display:flex;gap:9px;padding:10px 12px;border-radius:10px;background:rgba(192,85,74,.1);border:1px solid rgba(192,85,74,.3);color:var(--ui-text)}
+.perm-warn svg{flex:0 0 auto;margin-top:2px;color:#c0554a}
 .perm-warn b{font-size:12px}
 .perm-warn p{margin:3px 0 0;font-size:11px;line-height:1.6;color:var(--ui-dim)}
 .perm-list{display:flex;flex-direction:column;gap:5px}
@@ -648,8 +648,8 @@ kbd{display:inline-block;padding:2px 6px;border-radius:5px;border:1px solid var(
 .perm-item .pi b{display:block;font-size:12px;font-weight:600}
 .perm-item .pi em{display:block;margin-top:2px;font-style:normal;font-size:11px;line-height:1.55;color:var(--ui-dim)}
 .perm-item .lv{flex:0 0 auto;font-size:10px;padding:1px 7px;border-radius:20px;border:1px solid transparent}
-.perm-item.lv2 .lv{color:#fbbf24;background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.28)}
-.perm-item.lv3 .lv{color:#fb7185;background:rgba(251,113,133,.12);border-color:rgba(251,113,133,.3)}
+.perm-item.lv2 .lv{color:#7a9450;background:rgba(122,148,80,.12);border-color:rgba(122,148,80,.28)}
+.perm-item.lv3 .lv{color:#c0554a;background:rgba(192,85,74,.12);border-color:rgba(192,85,74,.3)}
 .perm-ack{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;border:1px dashed var(--ui-border-soft);font-size:11px;color:var(--ui-text);cursor:pointer}
 .perm-ack input{width:15px;height:15px;min-width:15px;margin:0;padding:0;accent-color:var(--ui-accent);flex:0 0 auto}
 .perm-hash{font-size:10px;color:var(--ui-dim);font-family:var(--ui-mono);overflow-wrap:anywhere}
@@ -661,10 +661,10 @@ kbd{display:inline-block;padding:2px 6px;border-radius:5px;border:1px solid var(
 .plug-mode-row .txt p{margin:2px 0 0;font-size:11px;line-height:1.55;color:var(--ui-dim)}
 .switch{position:relative;flex:0 0 auto;width:38px;height:22px;border-radius:20px;border:1px solid var(--ui-border);background:var(--ui-bg);cursor:pointer;transition:background var(--ui-dur),border-color var(--ui-dur)}
 .switch::after{content:'';position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:var(--ui-dim);transition:transform var(--ui-dur),background var(--ui-dur)}
-.switch.on{background:rgba(251,113,133,.22);border-color:rgba(251,113,133,.5)}
-.switch.on::after{transform:translateX(16px);background:#fb7185}
+.switch.on{background:rgba(192,85,74,.22);border-color:rgba(192,85,74,.5)}
+.switch.on::after{transform:translateX(16px);background:#c0554a}
 .plug-perms{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
-.plug-perms span{font-size:10px;padding:1px 6px;border-radius:6px;background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.24);color:#fda4af}
+.plug-perms span{font-size:10px;padding:1px 6px;border-radius:6px;background:rgba(192,85,74,.1);border:1px solid rgba(192,85,74,.24);color:#fda4af}
 .plug-grant{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:10.5px;color:var(--ui-dim)}
 .plug-grant .btn{height:22px;font-size:10.5px;padding:0 8px}
 
@@ -876,7 +876,7 @@ const DB_NAME = 'mirage-os';
 const DB_STORE = 'apps';
 const DB_PLUGIN_STORE = 'plugins';
 const DEFAULT_SETTINGS = { theme: 'light', wallpaper: 'matcha', accent: '#6f8f42', motion: true, wallpaperImage: '' };
-const ACCENTS = ['#6f8f42', '#5d7a35', '#a78bfa', '#34d399', '#f5b84b', '#fb7185'];
+const ACCENTS = ['#6f8f42', '#5d7a35', '#84a055', '#4a6b2f', '#7a9450', '#8ba860'];
 const WALLPAPERS = [
   { id: 'matcha', name: '抹茶' },
   { id: 'aurora', name: '极光' },
@@ -931,13 +931,13 @@ function logoMark(size = 28) {
 }
 
 const BUILTINS = {
-  files: { id: 'files', name: '应用库', sub: '导入与管理应用', icon: 'folder', g1: '#5b8cff', g2: '#7c5cff', w: 920, h: 620, render: renderFilesApp },
-  settings: { id: 'settings', name: '设置', sub: '外观与系统', icon: 'sliders', g1: '#64748b', g2: '#94a3b8', w: 880, h: 680, render: renderSettingsApp },
-  notes: { id: 'notes', name: '备忘录', sub: '随手记录', icon: 'note', g1: '#f5b84b', g2: '#f97316', w: 760, h: 540, render: renderNotesApp },
-  welcome: { id: 'welcome', name: '欢迎使用', sub: '快速上手', icon: 'spark', g1: '#7d9bff', g2: '#b06cff', w: 880, h: 640, render: renderWelcomeApp },
-  skin: { id: 'skin', name: '界面皮肤', sub: 'UI 引擎与规范', icon: 'palette', g1: '#a78bfa', g2: '#6c8cff', w: 900, h: 700, render: renderSkinApp },
-  plugins: { id: 'plugins', name: '插件中心', sub: '扩展、内核与崩溃恢复', icon: 'code', g1: '#34d399', g2: '#0ea5e9', w: 960, h: 720, render: renderPluginsApp },
-  about: { id: 'about', name: '关于忘忧', sub: '版本信息', icon: 'info', g1: '#38bdf8', g2: '#6366f1', w: 680, h: 600, render: renderAboutApp }
+  files: { id: 'files', name: '应用库', sub: '导入与管理应用', icon: 'folder', g1: '#6f8f42', g2: '#84a055', w: 920, h: 620, render: renderFilesApp },
+  settings: { id: 'settings', name: '设置', sub: '外观与系统', icon: 'sliders', g1: '#5d7a35', g2: '#7a9450', w: 880, h: 680, render: renderSettingsApp },
+  notes: { id: 'notes', name: '备忘录', sub: '随手记录', icon: 'note', g1: '#84a055', g2: '#9db868', w: 760, h: 540, render: renderNotesApp },
+  welcome: { id: 'welcome', name: '欢迎使用', sub: '快速上手', icon: 'spark', g1: '#7a9450', g2: '#8ba860', w: 880, h: 640, render: renderWelcomeApp },
+  skin: { id: 'skin', name: '界面皮肤', sub: 'UI 引擎与规范', icon: 'palette', g1: '#4a6b2f', g2: '#6f8f42', w: 900, h: 700, render: renderSkinApp },
+  plugins: { id: 'plugins', name: '插件中心', sub: '扩展、内核与崩溃恢复', icon: 'code', g1: '#66a03c', g2: '#8ab554', w: 960, h: 720, render: renderPluginsApp },
+  about: { id: 'about', name: '关于忘忧', sub: '版本信息', icon: 'info', g1: '#5d7a35', g2: '#84a055', w: 680, h: 600, render: renderAboutApp }
 };
 
 const state = {
@@ -1001,7 +1001,7 @@ function applySettingsImpl() {
     }
   }
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', settings.theme === 'light' ? '#f3f4ec' : '#05070d');
+  if (meta) meta.setAttribute('content', settings.theme === 'light' ? '#f3f4ec' : '#0a0d08');
 }
 
 function setSettingsImpl(patch, opts = {}) {
@@ -2266,17 +2266,23 @@ function minimizeWindow(win) {
   const finish = () => {
     win.el.style.display = 'none';
     win.el.style.transform = '';
+    win.el.style.transformOrigin = '';
     win.el.style.opacity = '';
   };
   if (button) {
     const to = button.getBoundingClientRect();
     const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
     const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+    // transform-origin 指向任务栏图标，让 scale 朝目标收敛
+    const ox = ((to.left + to.width / 2 - from.left) / from.width) * 100;
+    const oy = ((to.top + to.height / 2 - from.top) / from.height) * 100;
+    win.el.style.transformOrigin = (Math.max(0, Math.min(100, ox))).toFixed(1) + '% ' + (Math.max(0, Math.min(100, oy))).toFixed(1) + '%';
     const anim = win.el.animate([
       { transform: 'translate(0,0) scale(1)', opacity: 1 },
       { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.14)', opacity: 0 }
-    ], { duration: 260, easing: 'cubic-bezier(.4,0,.2,1)' });
+    ], { duration: 260, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
     anim.onfinish = finish;
+    anim.oncancel = finish;
   } else {
     setTimeout(finish, 150);
   }
@@ -5760,7 +5766,7 @@ const SANDBOX_RPC_TIMEOUT = 8000;
 
 /* 嵌入型沙箱文档的默认参数（显式背景，避免 Chromium 画出白底） */
 const SECTION_DOC_OPTS = { autoHeight: true, bg: 'var(--ui-surface-2,#161b26)' };
-const WIDGET_DOC_OPTS = { autoHeight: true, bg: 'var(--ui-bg,#070910)' };
+const WIDGET_DOC_OPTS = { autoHeight: true, bg: 'var(--ui-bg,#0a0d08)' };
 
 /* 沙箱插件允许主动打开的系统应用（其余只能打开自己的应用） */
 const SANDBOX_APP_WHITELIST = ['files', 'skin', 'plugins', 'notes', 'settings', 'about', 'welcome'];
@@ -5776,7 +5782,7 @@ const SANDBOX_BASE_CSS = [
   '::-webkit-scrollbar-thumb{background:rgba(128,128,128,.32);border-radius:8px}',
   '::-webkit-scrollbar-track{background:transparent}',
   '.mirage-boot,.mirage-error{padding:22px;font-size:12px;color:var(--ui-dim,#9aa3b8)}',
-  '.mirage-error{color:#fb7185}'
+  '.mirage-error{color:#c0554a}'
 ].join('');
 
 /*
@@ -6959,7 +6965,7 @@ function buildAdvancedPluginTemplate() {
     '    });',
     '',
     '    /* 3. 全局样式：会影响整个系统界面 */',
-    '    ctx.css(\'body.advanced-demo .d-icon{outline:1px solid rgba(251,113,133,.4)}\');',
+    '    ctx.css(\'body.advanced-demo .d-icon{outline:1px solid rgba(192,85,74,.4)}\');',
     '    document.body.classList.add("advanced-demo");',
     '    ctx.cleanup(() => document.body.classList.remove("advanced-demo"));',
     '',
@@ -7072,7 +7078,7 @@ function renderPluginsApp(root) {
         '<div class="desc">普通模式默认开启，插件在独立沙箱 iframe 中运行，拿不到宿主 DOM 与本地数据。高级模式是「与系统同权」的通道，只建议运行自己写的代码。</div>' +
         '<div class="body">' +
           '<div class="plug-mode-row">' +
-            '<span class="mk" style="color:#fb7185">' + icon('shield', 16) + '</span>' +
+            '<span class="mk" style="color:#c0554a">' + icon('shield', 16) + '</span>' +
             '<div class="txt"><b>高级模式</b><p data-adv-hint>' + advancedModeHint() + '</p></div>' +
             '<button class="switch" data-plug="toggle-advanced" aria-label="切换高级模式"></button>' +
           '</div>' +
@@ -7170,7 +7176,7 @@ function renderPluginsApp(root) {
           rec.crashes ? '<span class="plug-tag err">崩溃 ' + rec.crashes + ' 次</span>' : ''
         ].filter(Boolean).join('');
         const errorLine = rec.lastError
-          ? '<div class="ds" style="color:#fb7185">最近错误：' + esc(String(rec.lastError.message || '').slice(0, 160)) + '</div>'
+          ? '<div class="ds" style="color:#c0554a">最近错误：' + esc(String(rec.lastError.message || '').slice(0, 160)) + '</div>'
           : '';
         const meta = [rec.author ? '作者 ' + rec.author : '', rec.filename ? rec.filename : ''].filter(Boolean).join(' · ');
         const permLine = isAdvanced && perms.length
