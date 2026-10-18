@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark" data-wallpaper="aurora" data-motion="on">
+<html lang="zh-CN" data-theme="light" data-wallpaper="matcha" data-motion="on">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#05070d">
-<title>幻境 OS · Mirage OS</title>
+<meta name="theme-color" content="#f3f4ec">
+<title>忘忧 OS · Wangyou OS</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%237d9bff'/%3E%3Cstop offset='1' stop-color='%23b06cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='url(%23g)'/%3E%3Cpath d='M12 4.5 19 8.8 12 19.5 5 8.8Z' fill='none' stroke='white' stroke-width='1.2' stroke-linejoin='round'/%3E%3Cpath d='M5 8.8h14M12 4.5v15M8 8.8 12 19.5l4-10.7' fill='none' stroke='white' stroke-opacity='.7' stroke-width='.9'/%3E%3C/svg%3E">
 <style>
 /* ==========================================================================
-   幻境 OS · 视觉层 v2
+   忘忧 OS · 视觉层 v2
    风格：半透明玻璃 / 无拟物
    —— 不使用渐变高光、内阴影、立体投影来模拟材质；
       只用「半透明底色 + 1px 细描边 + 背景模糊 + 一处柔光」表达层级。
@@ -17,13 +17,13 @@
    ========================================================================== */
 *,*::before,*::after{box-sizing:border-box}
 html,body{height:100%}
-html{color-scheme:dark;-webkit-text-size-adjust:100%}
+html{color-scheme:light;-webkit-text-size-adjust:100%}
 [data-theme="light"]{color-scheme:light}
 
 :root{
   /* —— 强调色（设置面板写入，皮肤可覆盖 --ui-accent 接管） —— */
-  --accent:#7c8cff;
-  --accent-rgb:124,140,255;
+  --accent:#6f8f42;
+  --accent-rgb:111,143,66;
   --ui-accent:var(--accent);
   --ui-accent-rgb:var(--accent-rgb);
 
@@ -94,29 +94,35 @@ html{color-scheme:dark;-webkit-text-size-adjust:100%}
   --ease-out:var(--ui-ease);
 }
 
+/* ==========================================================================
+   浅色主题 · 米白 × 抹茶
+   设计基准：底层是带一点绿意的米白（#f3f4ec），表面用接近实体的白，
+   文字用深橄榄黑，强调色默认跟随设置（默认抹茶绿 #6f8f42）。
+   所有色值都按 WCAG 对比度校过：正文 ≥ 7:1，次要文字 ≥ 4.5:1。
+   ========================================================================== */
 [data-theme="light"]{
-  --ui-bg:#e9edf4;
-  --ui-surface:rgba(255,255,255,.68);
-  --ui-surface-2:rgba(255,255,255,.82);
-  --ui-surface-3:rgba(255,255,255,.90);
-  --ui-body:rgba(255,255,255,.78);
-  --ui-elev:rgba(16,24,40,.045);
-  --ui-elev-2:rgba(16,24,40,.09);
-  --ui-border:rgba(16,24,40,.11);
-  --ui-border-soft:rgba(16,24,40,.07);
-  --ui-track:rgba(16,24,40,.12);
-  --tile-bg-a:.12;
-  --tile-border-a:.14;
-  --tile-ink-l:36%;
-  --label-bg:rgba(255,255,255,.55);
-  --label-ink:#101725;
-  --ui-text:#101725;
-  --ui-dim:#5b6679;
-  --ui-dim-2:#7c8698;
+  --ui-bg:#f3f4ec;
+  --ui-surface:rgba(255,255,255,.88);
+  --ui-surface-2:#ffffff;
+  --ui-surface-3:#ffffff;
+  --ui-body:#ffffff;
+  --ui-elev:rgba(60,72,40,.05);
+  --ui-elev-2:rgba(60,72,40,.10);
+  --ui-border:rgba(60,72,40,.15);
+  --ui-border-soft:rgba(60,72,40,.085);
+  --ui-track:rgba(60,72,40,.14);
+  --tile-bg-a:.14;
+  --tile-border-a:.18;
+  --tile-ink-l:34%;
+  --label-bg:rgba(255,255,255,.78);
+  --label-ink:#24291d;
+  --ui-text:#24291d;
+  --ui-dim:#5d6647;
+  --ui-dim-2:#7f8768;
   --ui-ink:#ffffff;
-  --ui-shadow:0 26px 60px -30px rgba(23,34,66,.35);
-  --ui-shadow-sm:0 2px 10px -6px rgba(23,34,66,.25);
-  --ui-scrim:rgba(12,18,30,.30);
+  --ui-shadow:0 1px 2px rgba(70,84,44,.05),0 18px 44px -20px rgba(70,84,44,.28);
+  --ui-shadow-sm:0 1px 3px rgba(70,84,44,.10);
+  --ui-scrim:rgba(40,48,28,.30);
 }
 
 body{
@@ -141,11 +147,11 @@ svg{display:block}
 :focus-visible{outline:2px solid rgba(var(--ui-accent-rgb),.72);outline-offset:2px}
 ::selection{background:rgba(var(--ui-accent-rgb),.28)}
 *{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.16) transparent}
-[data-theme="light"] *{scrollbar-color:rgba(16,24,40,.2) transparent}
+[data-theme="light"] *{scrollbar-color:rgba(60,72,40,.24) transparent}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:99px;border:3px solid transparent;background-clip:content-box}
-[data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(16,24,40,.18);border:3px solid transparent;background-clip:content-box}
+[data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(60,72,40,.22);border:3px solid transparent;background-clip:content-box}
 body.is-dragging,body.is-dragging *{cursor:grabbing!important}
 body.is-resizing,body.is-resizing *{cursor:default!important}
 
@@ -171,7 +177,17 @@ body.is-resizing,body.is-resizing *{cursor:default!important}
 .w-grid{position:absolute;inset:0;opacity:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(120% 120% at 50% 40%,#000 30%,transparent 78%);-webkit-mask-image:radial-gradient(120% 120% at 50% 40%,#000 30%,transparent 78%)}
 .w-stars{position:absolute;inset:0;opacity:0;background-image:radial-gradient(1px 1px at 18% 24%,rgba(255,255,255,.85) 50%,transparent 51%),radial-gradient(1px 1px at 62% 12%,rgba(255,255,255,.7) 50%,transparent 51%),radial-gradient(1.4px 1.4px at 84% 38%,rgba(255,255,255,.9) 50%,transparent 51%),radial-gradient(1px 1px at 34% 62%,rgba(255,255,255,.55) 50%,transparent 51%),radial-gradient(1.2px 1.2px at 74% 72%,rgba(255,255,255,.75) 50%,transparent 51%),radial-gradient(1px 1px at 12% 82%,rgba(255,255,255,.5) 50%,transparent 51%),radial-gradient(1px 1px at 48% 40%,rgba(255,255,255,.4) 50%,transparent 51%),radial-gradient(1px 1px at 92% 84%,rgba(255,255,255,.55) 50%,transparent 51%);background-size:520px 520px,640px 640px,720px 720px,460px 460px,580px 580px,620px 620px,540px 540px,760px 760px}
 .w-vignette{position:absolute;inset:0;z-index:2;background:radial-gradient(130% 120% at 50% 16%,transparent 48%,rgba(0,0,0,.34) 100%);pointer-events:none}
-[data-theme="light"] .w-vignette{background:radial-gradient(130% 120% at 50% 16%,transparent 58%,rgba(24,34,56,.14) 100%)}
+[data-theme="light"] .w-vignette{background:radial-gradient(130% 120% at 50% 16%,transparent 62%,rgba(70,84,44,.10) 100%)}
+
+/* —— 抹茶：浅色系默认壁纸。米白偏绿的底 + 三团低饱和抹茶/糙米柔光，
+      桌面文字直接压在上面也可读，不依赖深色暗角 —— */
+[data-wallpaper="matcha"] #wallpaper{background:radial-gradient(130% 110% at 10% -8%,#e6ecd6 0%,#f0f1e4 48%,#f4f5ec 100%)}
+[data-wallpaper="matcha"] .b1{width:58vmax;height:58vmax;left:-16vmax;top:-22vmax;background:radial-gradient(circle,#a9c281,transparent 62%);opacity:.42;animation:drift1 30s ease-in-out infinite alternate}
+[data-wallpaper="matcha"] .b2{width:46vmax;height:46vmax;right:-12vmax;top:4vmax;background:radial-gradient(circle,#e0d3a0,transparent 64%);opacity:.38;animation:drift2 34s ease-in-out infinite alternate}
+[data-wallpaper="matcha"] .b3{width:50vmax;height:50vmax;left:20vmax;bottom:-26vmax;background:radial-gradient(circle,#8cae66,transparent 66%);opacity:.30;animation:drift3 38s ease-in-out infinite alternate}
+[data-wallpaper="matcha"] .w-stars{display:none}
+[data-wallpaper="matcha"] .w-grid{opacity:.5;background-image:linear-gradient(rgba(90,110,60,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(90,110,60,.06) 1px,transparent 1px);background-size:46px 46px}
+[data-wallpaper="matcha"] .w-vignette{background:radial-gradient(130% 120% at 50% 16%,transparent 66%,rgba(70,84,44,.08) 100%)}
 
 [data-wallpaper="aurora"] #wallpaper{background:radial-gradient(120% 110% at 14% -4%,#142752 0%,#0a1020 56%,#05070c 100%)}
 [data-wallpaper="aurora"] .b1{width:56vmax;height:56vmax;left:-15vmax;top:-20vmax;background:radial-gradient(circle,#2f6bff,transparent 64%);opacity:.55;animation:drift1 28s ease-in-out infinite alternate}
@@ -446,7 +462,7 @@ body.is-resizing,body.is-resizing *{cursor:default!important}
 .dot{width:24px;height:24px;border-radius:50%;border:2px solid transparent;transition:transform .12s,box-shadow .12s;position:relative}
 .dot:hover{transform:scale(1.08)}
 .dot.on{border-color:rgba(255,255,255,.85);box-shadow:0 0 0 2px rgba(var(--ui-accent-rgb),.45)}
-[data-theme="light"] .dot.on{border-color:rgba(16,24,40,.6)}
+[data-theme="light"] .dot.on{border-color:rgba(36,41,29,.55)}
 .toggle{width:40px;height:23px;border-radius:99px;background:var(--ui-track);position:relative;transition:background var(--ui-dur);flex-shrink:0;cursor:pointer}
 .toggle::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform var(--ui-dur) var(--ui-ease);box-shadow:0 1px 3px rgba(0,0,0,.25)}
 .toggle.on{background:var(--ui-accent)}
@@ -515,7 +531,7 @@ kbd{display:inline-block;padding:2px 6px;border-radius:5px;border:1px solid var(
 .skin-list{display:flex;flex-direction:column;gap:6px}
 .skin-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;border:1px solid var(--ui-border-soft);background:rgba(255,255,255,.02)}
 .skin-item.active{border-color:rgba(var(--ui-accent-rgb),.36);background:rgba(var(--ui-accent-rgb),.07)}
-.skin-item .swatch{width:28px;height:28px;border-radius:8px;flex-shrink:0;border:1px solid var(--ui-border);background:linear-gradient(135deg,var(--sw1,#7c8cff),var(--sw2,#1b2030))}
+.skin-item .swatch{width:28px;height:28px;border-radius:8px;flex-shrink:0;border:1px solid var(--ui-border);background:linear-gradient(135deg,var(--sw1,#6f8f42),var(--sw2,#1b2030))}
 .skin-item .nm{font-size:12px;line-height:1.3}
 .skin-item .mt{font-size:10.5px;color:var(--ui-dim);margin-top:2px}
 .skin-item .acts{margin-left:auto;display:flex;gap:4px;flex-shrink:0}
@@ -526,8 +542,8 @@ kbd{display:inline-block;padding:2px 6px;border-radius:5px;border:1px solid var(
 .code-box{position:relative;border:1px solid var(--ui-border-soft);border-radius:10px;background:rgba(0,0,0,.22);overflow:hidden}
 .skin-editor{width:100%;min-height:140px;resize:vertical;border:1px solid var(--ui-border-soft);border-radius:10px;background:rgba(0,0,0,.22);color:var(--ui-text);padding:12px 13px;outline:none;font-family:var(--ui-mono);font-size:11.5px;line-height:1.7;tab-size:2;transition:border-color var(--ui-dur),box-shadow var(--ui-dur)}
 .skin-editor:focus{border-color:rgba(var(--ui-accent-rgb),.45);box-shadow:0 0 0 3px rgba(var(--ui-accent-rgb),.10)}
-[data-theme="light"] .skin-editor{background:rgba(16,24,40,.04)}
-[data-theme="light"] .code-box{background:rgba(16,24,40,.04)}
+[data-theme="light"] .skin-editor{background:rgba(60,72,40,.045)}
+[data-theme="light"] .code-box{background:rgba(60,72,40,.045)}
 .code-box pre{margin:0;padding:12px 13px;overflow:auto;max-height:260px;font-family:var(--ui-mono);font-size:11px;line-height:1.7;color:var(--ui-text);white-space:pre;tab-size:2}
 .code-box .copy{position:absolute;top:6px;right:6px}
 .inline-code{font-family:var(--ui-mono);font-size:11px;background:var(--ui-elev-2);border:1px solid var(--ui-border-soft);border-radius:5px;padding:1px 5px}
@@ -552,7 +568,7 @@ kbd{display:inline-block;padding:2px 6px;border-radius:5px;border:1px solid var(
 .plug-safe .acts{margin-left:auto;flex-shrink:0}
 .plug-log{display:flex;flex-direction:column;gap:4px;max-height:150px;overflow:auto}
 .plug-log .row{font-family:var(--ui-mono);font-size:10.5px;line-height:1.55;color:var(--ui-dim);padding:6px 8px;border-radius:7px;background:rgba(0,0,0,.18);overflow-wrap:anywhere}
-[data-theme="light"] .plug-log .row{background:rgba(16,24,40,.04)}
+[data-theme="light"] .plug-log .row{background:rgba(60,72,40,.045)}
 .plug-log .row b{color:#fb7185;font-weight:500}
 .plug-editor{min-height:190px}
 .plug-hint{font-size:10.5px;color:var(--ui-dim);line-height:1.6}
@@ -685,9 +701,9 @@ kbd{display:inline-block;padding:2px 6px;border-radius:5px;border:1px solid var(
 <body>
 <div id="boot">
   <div class="boot-inner">
-    <div class="boot-logo"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.6 21 8.6 12 21.6 3 8.6Z" fill="rgba(255,255,255,.16)" stroke="rgba(255,255,255,.94)" stroke-width="1.15" stroke-linejoin="round"/><path d="M3 8.6h18M12 2.6v19M7.4 8.6 12 21.6l4.6-13" stroke="rgba(255,255,255,.7)" stroke-width=".85" stroke-linejoin="round"/></svg></div>
-    <div class="boot-name">幻境 OS</div>
-    <div class="boot-sub">MIRAGE OS</div>
+    <div class="boot-logo"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.6 21 8.6 12 21.6 3 8.6Z" fill="rgba(128,144,96,.14)" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round"/><path d="M3 8.6h18M12 2.6v19M7.4 8.6 12 21.6l4.6-13" stroke="currentColor" stroke-opacity=".6" stroke-width=".85" stroke-linejoin="round"/></svg></div>
+    <div class="boot-name">忘忧 OS</div>
+    <div class="boot-sub">WANGYOU OS</div>
     <div class="boot-track"><div class="boot-fill" id="boot-fill"></div></div>
     <div class="boot-tip" id="boot-tip">正在初始化桌面环境…</div>
   </div>
@@ -744,7 +760,7 @@ kbd{display:inline-block;padding:2px 6px;border-radius:5px;border:1px solid var(
     <div class="start-empty" id="start-empty" hidden><b>没有找到应用</b>换个关键词试试，或导入一个 HTML 应用。</div>
   </div>
   <div class="start-foot">
-    <div class="start-user"><span class="av">M</span><div><div class="nm">本地用户</div><div class="st">幻境 OS · 离线运行</div></div></div>
+    <div class="start-user"><span class="av">M</span><div><div class="nm">本地用户</div><div class="st">忘忧 OS · 离线运行</div></div></div>
     <button class="fbtn" id="start-export" title="导出整个系统" aria-label="导出整个系统"></button>
     <button class="fbtn" id="start-settings" title="设置" aria-label="设置"></button>
     <button class="fbtn" id="start-about" title="关于" aria-label="关于"></button>
@@ -810,7 +826,7 @@ const hexHue = (hex) => {
   return Math.round((h * 60 + 360) % 360);
 };
 
-const VERSION = '2.2.0';
+const VERSION = '2.3.0';
 const LS = {
   settings: 'mirage.settings.v1',
   localApps: 'mirage.localApps.v1',
@@ -829,9 +845,10 @@ const LS = {
 const DB_NAME = 'mirage-os';
 const DB_STORE = 'apps';
 const DB_PLUGIN_STORE = 'plugins';
-const DEFAULT_SETTINGS = { theme: 'dark', wallpaper: 'aurora', accent: '#6c8cff', motion: true, wallpaperImage: '' };
-const ACCENTS = ['#6c8cff', '#a78bfa', '#34d399', '#f5b84b', '#fb7185'];
+const DEFAULT_SETTINGS = { theme: 'light', wallpaper: 'matcha', accent: '#6f8f42', motion: true, wallpaperImage: '' };
+const ACCENTS = ['#6f8f42', '#5d7a35', '#a78bfa', '#34d399', '#f5b84b', '#fb7185'];
 const WALLPAPERS = [
+  { id: 'matcha', name: '抹茶' },
   { id: 'aurora', name: '极光' },
   { id: 'dusk', name: '暮色' },
   { id: 'ocean', name: '深海' },
@@ -890,7 +907,7 @@ const BUILTINS = {
   welcome: { id: 'welcome', name: '欢迎使用', sub: '快速上手', icon: 'spark', g1: '#7d9bff', g2: '#b06cff', w: 880, h: 640, render: renderWelcomeApp },
   skin: { id: 'skin', name: '界面皮肤', sub: 'UI 引擎与规范', icon: 'palette', g1: '#a78bfa', g2: '#6c8cff', w: 900, h: 700, render: renderSkinApp },
   plugins: { id: 'plugins', name: '插件中心', sub: '扩展、内核与崩溃恢复', icon: 'code', g1: '#34d399', g2: '#0ea5e9', w: 960, h: 720, render: renderPluginsApp },
-  about: { id: 'about', name: '关于幻境', sub: '版本信息', icon: 'info', g1: '#38bdf8', g2: '#6366f1', w: 680, h: 600, render: renderAboutApp }
+  about: { id: 'about', name: '关于忘忧', sub: '版本信息', icon: 'info', g1: '#38bdf8', g2: '#6366f1', w: 680, h: 600, render: renderAboutApp }
 };
 
 const state = {
@@ -938,7 +955,10 @@ function saveSettings() {
 function applySettingsImpl() {
   const root = document.documentElement;
   root.dataset.theme = settings.theme === 'light' ? 'light' : 'dark';
-  root.dataset.wallpaper = settings.wallpaper || 'aurora';
+  root.dataset.wallpaper = settings.wallpaper || 'matcha';
+  root.dataset.motion = settings.motion === false ? 'off' : 'on';
+  /* color-scheme 影响原生控件（滚动条、输入框、日期选择）的渲染方向，跟随主题 */
+  root.style.colorScheme = settings.theme === 'light' ? 'light' : 'dark';
   root.dataset.motion = settings.motion === false ? 'off' : 'on';
   root.style.setProperty('--accent', settings.accent);
   root.style.setProperty('--accent-rgb', hexToRgb(settings.accent).join(','));
@@ -951,7 +971,7 @@ function applySettingsImpl() {
     }
   }
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', settings.theme === 'light' ? '#eef2f9' : '#05070d');
+  if (meta) meta.setAttribute('content', settings.theme === 'light' ? '#f3f4ec' : '#05070d');
 }
 
 function setSettingsImpl(patch, opts = {}) {
@@ -1311,7 +1331,7 @@ function buildSkinTemplate() {
     '<html lang="zh-CN">',
     '<head>',
     '<meta charset="utf-8">',
-    '<title>我的幻境皮肤</title>',
+    '<title>我的忘忧皮肤</title>',
     '',
     '<' + '!-- ① 皮肤清单：可选，但建议填写。引擎会读取它显示名称、作者与可选的主题/强调色 --' + '>',
     '<script type="application/json" id="mirage-skin-manifest">',
@@ -1322,7 +1342,7 @@ function buildSkinTemplate() {
     '  "version": "1.0",',
     '  "description": "一句话描述这套设计",',
     '  "theme": "dark",',
-    '  "accent": "#7c8cff",',
+    '  "accent": "#6f8f42",',
     '  "tokens": {',
     '    "--ui-radius": "12px"',
     '  }',
@@ -1343,7 +1363,7 @@ function buildSkinTemplate() {
     '  --ui-dim:#98a2b5;',
     '  --ui-radius:14px;',
     '  --ui-blur:22px;',
-    '  --ui-accent:#7c8cff;',
+    '  --ui-accent:#6f8f42;',
     '}',
     '',
     '/* 再按需微调组件 */',
@@ -1633,7 +1653,7 @@ function renderSkinApp(root) {
       const swatch = document.createElement('span');
       swatch.className = 'swatch';
       const manifest = record.manifest || {};
-      swatch.style.setProperty('--sw1', manifest.accent || '#7c8cff');
+      swatch.style.setProperty('--sw1', manifest.accent || '#6f8f42');
       swatch.style.setProperty('--sw2', manifest.theme === 'light' ? '#f4f6fb' : '#1b2030');
       const meta = document.createElement('div');
       const nm = document.createElement('div');
@@ -2124,8 +2144,14 @@ function closeWindowImpl(win) {
   if (win.iframe) {
     try { win.iframe.srcdoc = ''; } catch (err) {}
   }
-  win.el.classList.add('closing');
-  setTimeout(() => {
+  // 关闭动画：朝任务栏图标方向缩放飞去（与最小化视觉一致但更快、更收敛）
+  const from = win.el.getBoundingClientRect();
+  const selector = '.tb-btn[data-key="' + String(win.key).replace(/"/g, '\\"') + '"]';
+  const button = document.querySelector(selector);
+  let closed = false;
+  const finishClose = () => {
+    if (closed) return;
+    closed = true;
     win.el.remove();
     state.windows.delete(win.key);
     if (state.activeKey === win.key) {
@@ -2140,7 +2166,22 @@ function closeWindowImpl(win) {
     syncTaskbar();
     syncStartResults();
     emit('app-closed', { key: win.key, win });
-  }, 170);
+  };
+  if (button) {
+    const to = button.getBoundingClientRect();
+    const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+    const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+    const anim = win.el.animate([
+      { transform: 'translate(0,0) scale(1)', opacity: 1 },
+      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.1)', opacity: 0 }
+    ], { duration: 180, easing: 'cubic-bezier(.4,0,.2,1)' });
+    anim.onfinish = finishClose;
+    anim.oncancel = finishClose;
+  } else {
+    // 兜底：没有对应任务栏图标（罕见），用中心微缩
+    win.el.classList.add('closing');
+    setTimeout(finishClose, 170);
+  }
 }
 
 function toggleMaximize(win) {
@@ -3474,7 +3515,7 @@ function renderWelcomeApp(root) {
     '<div class="welcome">' +
       '<div class="mark">' + logoMark(32) + '</div>' +
       '<h1>把任意网页，变成桌面应用</h1>' +
-      '<p class="lead">这里是 <b>幻境 OS</b>，一个完全运行在浏览器里的伪系统引擎。导入单文件 HTML，它会自动读取标题、图标与主题色，生成独立窗口；需要更深改造时，插入一个 HTML 插件就能改界面、改功能甚至拦截内核。</p>' +
+      '<p class="lead">这里是 <b>忘忧 OS</b>，一个完全运行在浏览器里的伪系统引擎。导入单文件 HTML，它会自动读取标题、图标与主题色，生成独立窗口；需要更深改造时，插入一个 HTML 插件就能改界面、改功能甚至拦截内核。</p>' +
       '<div class="cta">' +
         '<button class="btn primary" data-act="import">' + icon('import', 15) + '导入 HTML 应用</button>' +
         '<button class="btn" data-act="sample">' + icon('spark', 15) + '载入示例应用</button>' +
@@ -3497,8 +3538,8 @@ function renderWelcomeApp(root) {
 function renderAboutApp(root) {
   root.innerHTML =
     '<div class="about">' +
-      '<div class="hero"><div class="mark">' + logoMark(32) + '</div><div><h1>幻境 OS</h1><div class="ver">Mirage OS · 版本 ' + VERSION + ' · 单文件伪系统引擎</div></div></div>' +
-      '<p>幻境 OS 是一个零依赖、完全离线的 HTML 桌面环境。它用浏览器原生能力实现窗口管理、任务栏、开始菜单、应用导入与系统导出。导入的每个网页都会成为独立应用，运行在隔离的 iframe 沙箱中。</p>' +
+      '<div class="hero"><div class="mark">' + logoMark(32) + '</div><div><h1>忘忧 OS</h1><div class="ver">Wangyou OS · 版本 ' + VERSION + ' · 单文件伪系统引擎</div></div></div>' +
+      '<p>忘忧 OS 是一个零依赖、完全离线的 HTML 桌面环境。它用浏览器原生能力实现窗口管理、任务栏、开始菜单、应用导入与系统导出。导入的每个网页都会成为独立应用，运行在隔离的 iframe 沙箱中。</p>' +
       '<p>v2 起，界面外观由 <b>UI 引擎</b>接管：载入一份写好的设计 HTML，整站的颜色、圆角、模糊、密度都会跟着变。默认外观为半透明玻璃，不含拟物质感。</p>' +
       '<p>v2.1 加入 <b>插件引擎</b>：HTML 插件拥有完整控制权，可注册应用与窗口、注入 UI、监听事件、拦截 openApp 等内核函数。插件出错或卡死时会被自动禁用；连续启动失败会进入安全模式。</p>' +
       '<div class="chips"><span class="chip">零第三方依赖</span><span class="chip">单文件架构</span><span class="chip">沙箱应用</span><span class="chip">离线可用</span><span class="chip">UI 引擎换肤</span><span class="chip">插件内核钩子</span><span class="chip">崩溃自恢复</span><span class="chip">同目录自动读取</span></div>' +
@@ -3921,7 +3962,7 @@ function buildExportHtml() {
   if (body) body.appendChild(script);
 
   const titleNode = clone.querySelector('title');
-  if (titleNode) titleNode.textContent = apps.length ? '幻境 OS · 我的系统' : '幻境 OS';
+  if (titleNode) titleNode.textContent = apps.length ? '忘忧 OS · 我的系统' : '忘忧 OS';
 
   return {
     html: '<!DOCTYPE html>\n' + clone.outerHTML,
@@ -3937,7 +3978,7 @@ function exportSystem() {
   try {
     const result = buildExportHtml();
     const blob = new Blob([result.html], { type: 'text/html;charset=utf-8' });
-    const filename = 'MirageOS-' + todayStamp() + '.html';
+    const filename = 'WangyouOS-' + todayStamp() + '.html';
     downloadBlob(blob, filename);
     toast('系统已导出 · ' + result.count + ' 个应用 · ' + fmtBytes(blob.size), 'success', { duration: 5600 });
     if (blob.size > 60 * 1024 * 1024) toast('导出文件较大，打开时可能需要更多内存', 'warn');
@@ -4090,7 +4131,7 @@ const SAMPLE_HTML = '<!DOCTYPE html>\n' +
 
 /* ============================ 插件引擎 ============================ */
 /*
- * 幻境 OS 的插件分两种运行模式，互相隔离、互不信任：
+ * 忘忧 OS 的插件分两种运行模式，互相隔离、互不信任：
  *
  *   1. sandbox（普通模式，默认）
  *      - 插件代码跑在一个 sandbox iframe 里，没有 allow-same-origin，
@@ -5639,7 +5680,7 @@ async function initPlugins() {
 /*
  * 这一整块只服务「普通插件」。它的目标不是让插件更弱，而是让**默认路径安全**：
  *
- *   ┌────────────── 宿主页面（幻境 OS）──────────────┐
+ *   ┌────────────── 宿主页面（忘忧 OS）──────────────┐
  *   │  pluginState / 窗口 / 桌面 / 内核钩子            │
  *   │        ▲                         │              │
  *   │        │ postMessage（RPC）        │ 注册元数据     │
@@ -5677,7 +5718,7 @@ const SANDBOX_BASE_CSS = [
   '*,*::before,*::after{box-sizing:border-box}',
   'html,body{margin:0;padding:0;background:transparent}',
   'body{font:13px/1.65 system-ui,-apple-system,"Segoe UI","PingFang SC",sans-serif;color:var(--ui-text,#e8eaf2);-webkit-font-smoothing:antialiased}',
-  'a{color:var(--ui-accent,#6c8cff)}',
+  'a{color:var(--ui-accent,#6f8f42)}',
   'button,input,select,textarea{font:inherit;color:inherit}',
   '::-webkit-scrollbar{width:8px;height:8px}',
   '::-webkit-scrollbar-thumb{background:rgba(128,128,128,.32);border-radius:8px}',
