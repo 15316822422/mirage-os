@@ -856,7 +856,7 @@ const hexHue = (hex) => {
   return Math.round((h * 60 + 360) % 360);
 };
 
-const VERSION = '2.3.0';
+const VERSION = '3.0.0';
 const LS = {
   settings: 'mirage.settings.v1',
   localApps: 'mirage.localApps.v1',
@@ -3562,9 +3562,10 @@ function renderAboutApp(root) {
     '<div class="about">' +
       '<div class="hero"><div class="mark">' + logoMark(32) + '</div><div><h1>忘忧 OS</h1><div class="ver">Wangyou OS · 版本 ' + VERSION + ' · 单文件伪系统引擎</div></div></div>' +
       '<p>忘忧 OS 是一个零依赖、完全离线的 HTML 桌面环境。它用浏览器原生能力实现窗口管理、任务栏、开始菜单、应用导入与系统导出。导入的每个网页都会成为独立应用，运行在隔离的 iframe 沙箱中。</p>' +
-      '<p>v2 起，界面外观由 <b>UI 引擎</b>接管：载入一份写好的设计 HTML，整站的颜色、圆角、模糊、密度都会跟着变。默认外观为半透明玻璃，不含拟物质感。</p>' +
-      '<p>v2.1 加入 <b>插件引擎</b>：HTML 插件拥有完整控制权，可注册应用与窗口、注入 UI、监听事件、拦截 openApp 等内核函数。插件出错或卡死时会被自动禁用；连续启动失败会进入安全模式。</p>' +
-      '<div class="chips"><span class="chip">零第三方依赖</span><span class="chip">单文件架构</span><span class="chip">沙箱应用</span><span class="chip">离线可用</span><span class="chip">UI 引擎换肤</span><span class="chip">插件内核钩子</span><span class="chip">崩溃自恢复</span><span class="chip">同目录自动读取</span></div>' +
+      '<p>v2 起，界面外观由 <b>UI 引擎</b>接管：载入一份写好的设计 HTML，整站的颜色、圆角、模糊、密度都会跟着变。</p>' +
+      '<p>v2.2 加入<b>沙箱插件</b>与<b>高级模式</b>：普通插件在独立 iframe 中运行，通过 Mirage API 与系统交互；高级插件逐项授权后可改写界面、覆写内核函数。插件出错会被自动禁用，连续启动失败会进入安全模式。</p>' +
+      '<p>v3.0 重做视觉层并统一品牌为忘忧 OS：默认浅色抹茶主题，内置七套壁纸并支持自定义图片，窗口缩放动画与系统图标配色也一并统一。</p>' +
+      '<div class="chips"><span class="chip">零第三方依赖</span><span class="chip">单文件架构</span><span class="chip">沙箱应用</span><span class="chip">离线可用</span><span class="chip">UI 引擎换肤</span><span class="chip">插件内核钩子</span><span class="chip">崩溃自恢复</span><span class="chip">七套壁纸</span><span class="chip">自定义壁纸</span><span class="chip">同目录自动读取</span></div>' +
       '<div><div class="set-title" style="margin-bottom:8px">快捷键</div><div class="kbd-list">' +
         '<div class="kbd-row"><span>搜索应用</span><span><kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd></span></div>' +
         '<div class="kbd-row"><span>导入 HTML 应用</span><span><kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>O</kbd></span></div>' +

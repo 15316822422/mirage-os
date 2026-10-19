@@ -1,7 +1,9 @@
-# 幻境 OS · UI 引擎规范
+# 忘忧 OS · UI 引擎规范
 
-> 版本 2.0 · 适用于 `index.html`
+> 版本 3.0 · 适用于 `index.html`
 > 一句话：**一份 HTML 文件就是一套界面**。载入后，引擎把它的 `<style>` 整段注入到页面最后，整站外观由它接管；引擎只负责结构与行为。
+
+> 兼容说明：3.0 完成品牌更名，但引擎内部标识继续沿用旧名——`Mirage` API、`mirage-plugin` 清单标记、`mirage.*` 存储键与 `data-mirage-skin` 属性均保持不变。
 
 ---
 
@@ -52,8 +54,8 @@
   "author": "你的名字",
   "version": "1.0",
   "description": "一句话描述",
-  "theme": "dark",
-  "accent": "#7c8cff",
+  "theme": "light",
+  "accent": "#6f8f42",
   "tokens": { "--ui-radius": "12px" }
 }
 </script>
@@ -82,7 +84,7 @@
 | `author` / `version` / `description` | string | 皮肤库展示用 |
 | `theme` | `"dark"` \| `"light"` | 载入时同步切换主题模式 |
 | `accent` | `#rrggbb` | 载入时同步设置强调色 |
-| `wallpaper` | `aurora` \| `dusk` \| `ocean` \| `nebula` \| `mono` | 载入时切换壁纸 |
+| `wallpaper` | `matcha` \| `aurora` \| `dusk` \| `ocean` \| `nebula` \| `mono` \| `custom` | 载入时切换壁纸。`custom` 使用设置中已保存的自定义图片 |
 | `tokens` | object | 追加到 CSS 最前面的 `:root{}`，适合只改令牌的轻量皮肤 |
 
 ---

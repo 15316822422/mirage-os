@@ -1,6 +1,6 @@
 <div align="center">
 
-# 幻境 OS · Mirage OS
+# 忘忧 OS · Wangyou OS
 
 **把任意网页，变成桌面应用。**
 
@@ -10,7 +10,7 @@
 
 </div>
 
-![幻境 OS 桌面](docs/screenshots/desktop.png)
+![忘忧 OS 桌面](docs/screenshots/desktop.png)
 
 ## 这是什么
 
@@ -26,7 +26,7 @@
 
 | 方式 | 适合 | 怎么做 |
 |---|---|---|
-| **压缩包** | 只想要一个能跑的目录 | 下 [`mirage-os-v2.2.0.zip`](https://github.com/15316822422/mirage-os/releases/latest)，解压即可 |
+| **压缩包** | 只想要一个能跑的目录 | 到 [Releases](https://github.com/15316822422/mirage-os/releases/latest) 下载 `wangyou-os-v3.0.0.zip`，解压即可 |
 | **克隆仓库** | 想改代码、跟进提交 | 见下面的命令 |
 
 ```bash
@@ -41,6 +41,8 @@ python3 -m http.server 8000
 # http://localhost:8000
 ```
 
+项目名已从「幻境 OS」更新为「忘忧 OS」，仓库地址沿用 `mirage-os`，历史链接仍然可用。
+
 压缩包里已经带好 `plugins/`、`skins/` 和文档，解压后同样起个服务就能看到插件自动加载。
 
 只想看看效果，直接双击 `index.html` 也行——只是浏览器不允许 `file://` 读目录，同目录的插件不会自动加载，手动导入即可。
@@ -52,6 +54,7 @@ python3 -m http.server 8000
 | **窗口管理** | 拖拽、八向缩放、最小化、最大化、贴边吸附、Alt+Tab 切换 |
 | **导入网页** | 选一个 HTML，自动识别标题/图标/主题色，生成可独立运行的窗口 |
 | **界面皮肤** | 三套内置皮肤，也可以写一个 HTML 皮肤文件换掉整套配色与圆角 |
+| **桌面外观** | 七套壁纸（抹茶、极光、暮色、深海、星云、石墨、自定义），支持上传图片，六组强调色 |
 | **插件系统** | 放进 `plugins/` 就自动加载；支持沙箱隔离与高级全权限两种模式 |
 | **导出系统** | `Ctrl+Shift+E` 把当前桌面连同应用、插件打包成一个新的单文件 HTML |
 | **快捷键** | `Ctrl+K` 搜索、`Ctrl+O` 导入、`Alt+Tab` 切换窗口 |
@@ -71,11 +74,13 @@ python3 -m http.server 8000
 
 普通插件默认就是隔离的，**不授权也能安全试用**；高级模式是一个需要手动打开的总开关，关掉它所有高级插件立即停止。
 
-写插件看这两份文档，从「五分钟写一个」到「全部 API」都写全了：
+引擎内部仍保留 `Mirage` API、`mirage-plugin` 清单标记和 `mirage.*` 存储键名，升级到 3.0 不需要改插件代码。
 
-- 📘 [普通（沙箱）插件规范](docs/PLUGIN-SPEC.md) —— 桥接协议、12 类 API、视图交互、崩溃恢复
-- 📕 [高级插件规范](docs/ADVANCED-PLUGIN-SPEC.md) —— 权限系统、`ctx` 全部成员、8 个内核钩子、心跳豁免
-- 🎨 [皮肤规范](docs/UI-SKIN-SPEC.md) —— 换掉配色、圆角、阴影与动效
+写插件看这几份文档，从「五分钟写一个」到「全部 API」都写全了：
+
+- [普通（沙箱）插件规范](docs/PLUGIN-SPEC.md) —— 桥接协议、12 类 API、视图交互、崩溃恢复
+- [高级插件规范](docs/ADVANCED-PLUGIN-SPEC.md) —— 权限系统、`ctx` 全部成员、8 个内核钩子、心跳豁免
+- [皮肤规范](docs/UI-SKIN-SPEC.md) —— 换掉配色、圆角、阴影与动效
 
 ## 插件中心
 
@@ -87,11 +92,17 @@ python3 -m http.server 8000
 
 ![高级插件授权](docs/screenshots/grant.png)
 
+## 移动端
+
+窄屏下窗口自动铺满，任务栏、开始菜单与插件视图保持可用。
+
+![忘忧 OS 移动端](docs/screenshots/mobile.png)
+
 ## 目录结构
 
 ```
 .
-├── index.html                  # 主程序（v2.2.0，单文件，约 320 KB）
+├── index.html                  # 主程序（v3.0.0，单文件）
 ├── plugins/                    # 示例插件
 │   ├── hello.html              #   普通插件：窗口 + 设置区块 + 右键菜单
 │   ├── clock.html              #   普通插件：任务栏时钟
@@ -99,11 +110,16 @@ python3 -m http.server 8000
 ├── plugins.json                # 自动发现清单
 ├── skins/                      # 界面皮肤
 ├── docs/
+│   ├── README.md               # 文档索引
 │   ├── PLUGIN-SPEC.md          # 普通插件编写文档
 │   ├── ADVANCED-PLUGIN-SPEC.md # 高级插件编写文档
 │   ├── UI-SKIN-SPEC.md         # 皮肤编写文档
 │   └── screenshots/
-├── releases/                   # 历史版本，每个都是可直接运行的单文件
+├── releases/
+│   ├── wangyou-os-v3.0.0.html  # 当前版本，可直接运行
+│   ├── legacy/                 # 2.x 及更早版本
+│   └── README.md               # 版本目录说明
+├── CHANGELOG.md
 └── README.md
 ```
 
@@ -113,13 +129,14 @@ python3 -m http.server 8000
 
 | 版本 | 主要变化 | 文件 |
 |---|---|---|
-| **v2.2.0** | 插件改为沙箱隔离；新增高级模式（权限授权、源码指纹、心跳豁免） | [`releases/`](releases/mirage-os-v2.2.0.html) |
-| v2.1.0 | 插件系统首版：插件与系统同权，`Mirage.register()` 直接拿 `ctx` | [`releases/`](releases/mirage-os-v2.1.0.html) |
-| v1.0.0 | 初版：窗口管理、桌面图标、导入网页、皮肤 | [`releases/`](releases/mirage-os-v1.0.0.html) |
+| **v3.0.0** | 品牌更新为忘忧 OS；浅色抹茶视觉、七套壁纸与自定义壁纸、动画修复 | [`releases/`](releases/wangyou-os-v3.0.0.html) |
+| v2.2.0 | 插件改为沙箱隔离；新增高级模式（权限授权、源码指纹、心跳豁免） | [`releases/legacy/`](releases/legacy/mirage-os-v2.2.0.html) |
+| v2.1.0 | 插件系统首版：插件与系统同权，`Mirage.register()` 直接拿 `ctx` | [`releases/legacy/`](releases/legacy/mirage-os-v2.1.0.html) |
+| v1.0.0 | 初版：窗口管理、桌面图标、导入网页、皮肤 | [`releases/legacy/`](releases/legacy/mirage-os-v1.0.0.html) |
 
 详细改动见 [CHANGELOG.md](CHANGELOG.md)。
 
-> 单文件适合直接双击运行；zip 适合想把插件、皮肤、文档一起拿走的情况。目前 zip 只提供最新版，历史版本只有单文件。
+> 单文件适合直接双击运行；zip 适合想把插件、皮肤、文档一起拿走的情况。目前 zip 只提供最新版，历史版本只有单文件，并保留发行时的「幻境 OS」名称与界面。
 
 ## 常见问题
 
@@ -134,6 +151,9 @@ python3 -m http.server 8000
 
 **高级模式安全吗？**
 它不是沙箱，是「安装时知情 + 启动前闸门」。授权后插件与系统同权，能读你所有本地数据。只跑自己写的或信得过的代码。
+
+**从 2.x 升级会丢数据吗？**
+不会。3.0 沿用同一套 `localStorage` 键名与 `Mirage` 插件 API，桌面设置、导入的应用与插件记录都会保留。
 
 ## 许可
 
