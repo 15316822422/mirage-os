@@ -6,7 +6,7 @@
 
 一个单文件 HTML，零依赖、离线可用，双击就得到一个能开窗、能换肤、能装插件的浏览器伪系统。
 
-[在线体验](https://15316822422.github.io/mirage-os/) · [下载最新版](https://github.com/15316822422/mirage-os/releases/latest) · [插件文档](docs/PLUGIN-SPEC.md) · [高级插件文档](docs/ADVANCED-PLUGIN-SPEC.md)
+[在线体验](https://15316822422.github.io/wangyou-os/) · [下载最新版](https://github.com/15316822422/wangyou-os/releases/latest) · [插件文档](docs/PLUGIN-SPEC.md) · [高级插件文档](docs/ADVANCED-PLUGIN-SPEC.md)
 
 </div>
 
@@ -26,13 +26,13 @@
 
 | 方式 | 适合 | 怎么做 |
 |---|---|---|
-| **压缩包** | 只想要一个能跑的目录 | 到 [Releases](https://github.com/15316822422/mirage-os/releases/latest) 下载 `wangyou-os-v3.0.0.zip`，解压即可 |
+| **压缩包** | 只想要一个能跑的目录 | 到 [Releases](https://github.com/15316822422/wangyou-os/releases/latest) 下载 `wangyou-os-v3.0.0.zip`，解压即可 |
 | **克隆仓库** | 想改代码、跟进提交 | 见下面的命令 |
 
 ```bash
 # 1. 下载或克隆
-git clone https://github.com/15316822422/mirage-os.git
-cd mirage-os
+git clone https://github.com/15316822422/wangyou-os.git
+cd wangyou-os
 
 # 2. 起个本地服务（推荐，插件才能自动发现）
 python3 -m http.server 8000
@@ -41,11 +41,18 @@ python3 -m http.server 8000
 # http://localhost:8000
 ```
 
-项目名已从「幻境 OS」更新为「忘忧 OS」，仓库地址沿用 `mirage-os`，历史链接仍然可用。
+项目名与仓库地址均已更新为「忘忧 OS / wangyou-os」，旧的 `mirage-os` 地址会自动跳转到新仓库。
 
 压缩包里已经带好 `plugins/`、`skins/` 和文档，解压后同样起个服务就能看到插件自动加载。
 
 只想看看效果，直接双击 `index.html` 也行——只是浏览器不允许 `file://` 读目录，同目录的插件不会自动加载，手动导入即可。
+
+## 下载 3.0
+
+| 文件 | 内容 | 下载 |
+|---|---|---|
+| `wangyou-os-v3.0.0.zip` | 完整包：主程序、插件、皮肤、文档 | [下载 ZIP](https://github.com/15316822422/wangyou-os/releases/download/v3.0.0/wangyou-os-v3.0.0.zip) |
+| `wangyou-os-v3.0.0.html` | 单文件版本，双击即用 | [下载 HTML](https://github.com/15316822422/wangyou-os/releases/download/v3.0.0/wangyou-os-v3.0.0.html) |
 
 ## 能做什么
 
@@ -141,7 +148,7 @@ python3 -m http.server 8000
 ## 常见问题
 
 **双击打开后插件没自动加载？**
-`file://` 下浏览器禁止脚本读取本地目录。起一个本地服务（`python3 -m http.server`），或用[在线版](https://15316822422.github.io/mirage-os/)。
+`file://` 下浏览器禁止脚本读取本地目录。起一个本地服务（`python3 -m http.server`），或用[在线版](https://15316822422.github.io/wangyou-os/)。
 
 **数据存在哪？怎么清空？**
 全部在 `localStorage`，键名以 `mirage.` 开头。浏览器里清掉本站数据即可回到初始状态。
