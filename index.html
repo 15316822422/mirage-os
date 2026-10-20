@@ -237,6 +237,19 @@ body.is-resizing,body.is-resizing *{cursor:default!important}
 @keyframes drift3{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(4vmax,-6vmax,0) scale(1.1)}}
 [data-motion="off"] .w-blob{animation:none!important}
 [data-motion="off"] *{scroll-behavior:auto}
+/* 高性能模式：移除背景模糊与壁纸漂移，适合老核显和低配设备 */
+[data-perf="on"]{--ui-blur:0px;--ui-blur-lg:0px}
+[data-perf="on"] .boot-logo,
+[data-perf="on"] .d-icon-label,
+[data-perf="on"] .win,
+[data-perf="on"] #taskbar,
+[data-perf="on"] #start,
+[data-perf="on"] #ctx,
+[data-perf="on"] #modal-layer,
+[data-perf="on"] .toast,
+[data-perf="on"] #dropzone,
+[data-perf="on"] .wp-opt .wp-name{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+[data-perf="on"] #wallpaper .w-blob{animation:none!important}
 
 /* ============================ 桌面 ============================ */
 #desktop{position:fixed;inset:0 0 var(--ui-taskbar-h) 0;z-index:1}
@@ -411,6 +424,18 @@ body.is-resizing,body.is-resizing *{cursor:default!important}
 .toast.out{animation:toastOut .22s forwards}
 @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes toastOut{to{opacity:0;transform:translateY(6px)}}
+
+/* ============================ 宿主错误条 ============================ */
+#host-error-bar{position:fixed;left:50%;top:12px;z-index:120;display:flex;align-items:center;gap:10px;width:min(640px,calc(100vw - 24px));padding:10px 12px;border-radius:12px;background:var(--ui-surface-3);border:1px solid rgba(192,85,74,.42);box-shadow:var(--ui-shadow-sm);color:var(--ui-text);opacity:0;pointer-events:none;transform:translate(-50%,-8px);transition:opacity var(--ui-dur),transform var(--ui-dur)}
+#host-error-bar.show{opacity:1;pointer-events:auto;transform:translate(-50%,0)}
+#host-error-bar .he-ic{width:27px;height:27px;border-radius:8px;display:grid;place-items:center;flex-shrink:0;background:rgba(192,85,74,.12);color:var(--danger)}
+#host-error-bar .he-body{flex:1;min-width:0;line-height:1.4}
+#host-error-bar .he-body b{display:block;font-size:12px;margin-bottom:2px}
+#host-error-bar .he-msg{display:block;font-size:11px;color:var(--ui-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#host-error-bar .he-acts{display:flex;align-items:center;gap:4px;flex-shrink:0}
+#host-error-bar .he-acts button{height:26px;padding:0 8px;border-radius:7px;border:1px solid var(--ui-border);background:var(--ui-elev);color:var(--ui-text);font-size:11px}
+#host-error-bar .he-acts button:hover{background:var(--ui-elev-2)}
+#host-error-bar .he-close{width:26px;padding:0!important}
 
 /* ============================ 拖放 ============================ */
 #dropzone{position:fixed;inset:10px;z-index:95;border-radius:var(--ui-radius-lg);border:1px dashed rgba(var(--ui-accent-rgb),.55);background:rgba(6,10,20,.42);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity var(--ui-dur);color:#fff}
@@ -815,6 +840,14 @@ const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const uid = (prefix) => prefix + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 const esc = (value) => String(value).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+const safeParse = (raw, fallback = null) => {
+  if (raw === null || raw === undefined || raw === '') return fallback;
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    return fallback;
+  }
+};
 const fmtBytes = (bytes) => {
   const n = Number(bytes) || 0;
   if (n < 1024) return n + ' B';
@@ -875,7 +908,7 @@ const LS = {
 const DB_NAME = 'mirage-os';
 const DB_STORE = 'apps';
 const DB_PLUGIN_STORE = 'plugins';
-const DEFAULT_SETTINGS = { theme: 'light', wallpaper: 'matcha', accent: '#6f8f42', motion: true, wallpaperImage: '' };
+const DEFAULT_SETTINGS = { theme: 'light', wallpaper: 'matcha', accent: '#6f8f42', motion: true, performance: false, wallpaperImage: '' };
 const ACCENTS = ['#6f8f42', '#5d7a35', '#84a055', '#4a6b2f', '#7a9450', '#8ba860'];
 const WALLPAPERS = [
   { id: 'matcha', name: '抹茶' },
@@ -962,14 +995,14 @@ const emit = (type, detail) => bus.dispatchEvent(new CustomEvent(type, { detail 
 
 function loadSettings() {
   const loaded = { ...DEFAULT_SETTINGS };
-  try {
-    const raw = localStorage.getItem(LS.settings);
-    if (raw) Object.assign(loaded, JSON.parse(raw));
-  } catch (err) {}
+  let saved = null;
+  try { saved = safeParse(localStorage.getItem(LS.settings), null); } catch (err) {}
+  if (saved && typeof saved === 'object' && !Array.isArray(saved)) Object.assign(loaded, saved);
   if (!/^#[0-9a-f]{6}$/i.test(String(loaded.accent || ''))) loaded.accent = DEFAULT_SETTINGS.accent;
   if (!['dark', 'light'].includes(loaded.theme)) loaded.theme = DEFAULT_SETTINGS.theme;
   if (!WALLPAPERS.some((w) => w.id === loaded.wallpaper)) loaded.wallpaper = DEFAULT_SETTINGS.wallpaper;
   loaded.motion = loaded.motion !== false;
+  loaded.performance = loaded.performance === true;
   return loaded;
 }
 
@@ -987,9 +1020,9 @@ function applySettingsImpl() {
   root.dataset.theme = settings.theme === 'light' ? 'light' : 'dark';
   root.dataset.wallpaper = settings.wallpaper || 'matcha';
   root.dataset.motion = settings.motion === false ? 'off' : 'on';
+  root.dataset.perf = settings.performance === true ? 'on' : 'off';
   /* color-scheme 影响原生控件（滚动条、输入框、日期选择）的渲染方向，跟随主题 */
   root.style.colorScheme = settings.theme === 'light' ? 'light' : 'dark';
-  root.dataset.motion = settings.motion === false ? 'off' : 'on';
   root.style.setProperty('--accent', settings.accent);
   root.style.setProperty('--accent-rgb', hexToRgb(settings.accent).join(','));
   const wp = $('#wp-image');
@@ -1091,7 +1124,7 @@ function hash36(str) {
 function readSkinRecord(key) {
   try {
     const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : null;
+    return safeParse(raw, null);
   } catch (err) {
     return null;
   }
@@ -1122,7 +1155,7 @@ function parseSkinSource(text, filename) {
     const doc = new DOMParser().parseFromString(raw, 'text/html');
     const metaNode = doc.getElementById('mirage-skin-manifest') || doc.querySelector('script[type="application/json"][data-mirage-manifest]');
     if (metaNode) {
-      try { Object.assign(manifest, JSON.parse(metaNode.textContent || '{}') || {}); } catch (err) {}
+      Object.assign(manifest, safeParse(metaNode.textContent, {}) || {});
     }
     const htmlEl = doc.documentElement;
     if (htmlEl) {
@@ -1302,7 +1335,7 @@ async function initSkin() {
     let manifest = {};
     try {
       const metaNode = document.getElementById(SKIN_META_ID);
-      manifest = JSON.parse((metaNode && metaNode.textContent) || '{}') || {};
+      manifest = safeParse(metaNode && metaNode.textContent, {}) || {};
     } catch (err) {}
     skinState.id = manifest.id || 'embedded';
     skinState.name = manifest.name || '内嵌皮肤';
@@ -1722,7 +1755,7 @@ function renderSkinApp(root) {
 function fallbackRead() {
   try {
     const raw = localStorage.getItem(LS.localApps);
-    return raw ? JSON.parse(raw) : [];
+    return safeParse(raw, []);
   } catch (err) {
     return [];
   }
@@ -1848,7 +1881,7 @@ async function readEmbedded() {
   const node = document.getElementById('embedded-data');
   if (!node) return null;
   try {
-    const data = JSON.parse(node.textContent || 'null');
+    const data = safeParse(node.textContent, null);
     if (!data || !Array.isArray(data.apps)) return null;
     return data;
   } catch (err) {
@@ -2954,6 +2987,40 @@ function askText(opts) {
   });
 }
 
+function showHostError(error) {
+  try {
+    let bar = document.getElementById('host-error-bar');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.id = 'host-error-bar';
+      bar.setAttribute('role', 'alert');
+      bar.innerHTML = '<span class="he-ic">' + icon('alert', 15) + '</span>' +
+        '<div class="he-body"><b>界面运行出错</b><span class="he-msg"></span></div>' +
+        '<div class="he-acts"><button type="button" data-he="reload">重载</button><button type="button" class="he-close" data-he="close" aria-label="关闭">×</button></div>';
+      bar.addEventListener('click', (event) => {
+        const btn = event.target.closest('[data-he]');
+        if (!btn) return;
+        if (btn.dataset.he === 'reload') location.reload();
+        else bar.remove();
+      });
+      document.body.appendChild(bar);
+    }
+    const cause = error && (error.reason || error);
+    const text = cause && (cause.message || cause.stack || cause) || '未知错误';
+    const msg = bar.querySelector('.he-msg');
+    if (msg) msg.textContent = String(text).replace(/\s+/g, ' ').slice(0, 220);
+    bar.classList.add('show');
+  } catch (err) {}
+}
+
+window.addEventListener('error', (event) => {
+  if (!event || (!event.message && !event.error)) return;
+  showHostError(event.error || event.message);
+});
+window.addEventListener('unhandledrejection', (event) => {
+  showHostError(event.reason);
+});
+
 function toastImpl(message, type = 'info', opts = {}) {
   const container = $('#toasts');
   if (!container) return;
@@ -3334,6 +3401,8 @@ function renderSettingsApp(root) {
             '<div class="seg" data-seg="theme"><button data-val="dark">深色</button><button data-val="light">浅色</button></div></div>' +
           '<div class="set-row"><div><div class="lab">界面动效</div><div class="hint">壁纸漂移、窗口过渡与图标入场动画。</div></div>' +
             '<button class="toggle" data-toggle="motion" aria-label="切换界面动效"></button></div>' +
+          '<div class="set-row"><div><div class="lab">高性能模式</div><div class="hint">关闭背景模糊与壁纸漂移，适合老核显与低配设备。</div></div>' +
+            '<button class="toggle" data-toggle="performance" aria-label="切换高性能模式"></button></div>' +
           '<div class="set-row" style="display:block"><div><div class="lab">桌面壁纸</div><div class="hint">选择内置壁纸，或上传一张自己的图片（会自动压缩）。</div></div>' +
             '<div class="wp-grid" style="margin-top:10px">' + wallpapers + '</div></div>' +
           '<div class="set-row"><div><div class="lab">强调色</div><div class="hint">用于高亮、按钮与选中状态。</div></div><div class="dots">' + accents + '</div></div>' +
@@ -3380,6 +3449,13 @@ function renderSettingsApp(root) {
   motion.addEventListener('click', () => {
     setSettings({ motion: settings.motion === false });
     motion.classList.toggle('on', settings.motion !== false);
+  });
+
+  const perf = $('[data-toggle="performance"]', root);
+  perf.classList.toggle('on', settings.performance === true);
+  perf.addEventListener('click', () => {
+    setSettings({ performance: settings.performance !== true });
+    perf.classList.toggle('on', settings.performance === true);
   });
 
   $$('[data-wp]', root).forEach((btn) => {
@@ -3440,6 +3516,7 @@ function renderSettingsApp(root) {
   const onSettings = () => {
     syncSeg();
     motion.classList.toggle('on', settings.motion !== false);
+    perf.classList.toggle('on', settings.performance === true);
     $$('[data-wp]', root).forEach((node) => node.classList.toggle('on', node.dataset.wp === settings.wallpaper));
     $$('[data-accent]', root).forEach((node) => node.classList.toggle('on', node.dataset.accent.toLowerCase() === settings.accent.toLowerCase()));
     const tile = $('[data-wp="custom"]', root);
@@ -3480,7 +3557,7 @@ function renderNotesApp(root) {
   let note = { title: '', body: '', updatedAt: 0 };
   try {
     const raw = localStorage.getItem(LS.note);
-    if (raw) note = { ...note, ...JSON.parse(raw) };
+    if (raw) note = { ...note, ...safeParse(raw, {}) };
   } catch (err) {}
   titleInput.value = note.title || '';
   bodyInput.value = note.body || '';
@@ -4281,7 +4358,7 @@ function pluginCtxError(message) {
 function readCrashState() {
   try {
     const raw = localStorage.getItem(LS.pluginState);
-    return raw ? (JSON.parse(raw) || {}) : {};
+    return safeParse(raw, {}) || {};
   } catch (err) {
     return {};
   }
@@ -4294,7 +4371,7 @@ function writeCrashState(next) {
 function readPluginErrors() {
   try {
     const raw = localStorage.getItem(LS.pluginErrors);
-    const list = raw ? JSON.parse(raw) : [];
+    const list = safeParse(raw, []);
     return Array.isArray(list) ? list.slice(0, 40) : [];
   } catch (err) {
     return [];
@@ -4308,7 +4385,7 @@ function savePluginErrors() {
 function readBootMarker() {
   try {
     const raw = localStorage.getItem(LS.pluginBoot);
-    return raw ? JSON.parse(raw) : null;
+    return safeParse(raw, null);
   } catch (err) {
     return null;
   }
@@ -4385,7 +4462,7 @@ function writeAdvancedMode(on) {
 function readGrants() {
   try {
     const raw = localStorage.getItem(LS.pluginGrants);
-    const data = raw ? JSON.parse(raw) : {};
+    const data = safeParse(raw, {});
     return data && typeof data === 'object' ? data : {};
   } catch (err) {
     return {};
@@ -4433,7 +4510,7 @@ function expandPermissions(list) {
 function readRuntimeMarker() {
   try {
     const raw = localStorage.getItem(LS.pluginRuntime);
-    return raw ? JSON.parse(raw) : null;
+    return safeParse(raw, null);
   } catch (err) {
     return null;
   }
@@ -4481,7 +4558,7 @@ function normalizePluginRecord(raw) {
 function pluginFallbackRead() {
   try {
     const raw = localStorage.getItem(LS.plugins);
-    const list = raw ? JSON.parse(raw) : [];
+    const list = safeParse(raw, []);
     return Array.isArray(list) ? list : [];
   } catch (err) {
     return [];
@@ -4546,14 +4623,14 @@ function readPluginManifest(doc) {
   if (meta) {
     const raw = meta.getAttribute('content') || '';
     try {
-      const parsed = JSON.parse(raw);
+      const parsed = safeParse(raw, null);
       if (parsed && typeof parsed === 'object') return parsed;
     } catch (err) {}
   }
   const node = doc.querySelector('script#mirage-plugin-manifest, script[type="application/json"][data-mirage-plugin]');
   if (node) {
     try {
-      const parsed = JSON.parse(node.textContent || '');
+      const parsed = safeParse(node.textContent, null);
       if (parsed && typeof parsed === 'object') return parsed;
     } catch (err) {}
   }
@@ -4568,7 +4645,7 @@ function parsePluginSource(text, filename) {
     const marker = text.match(/@mirage-plugin\s+(\{[\s\S]*?\})/);
     let manifest = {};
     if (marker) {
-      try { manifest = JSON.parse(marker[1]); } catch (err) {}
+      manifest = safeParse(marker[1], {}) || {};
     }
     return { manifest, styles: [], scripts: [text], body: '', kind: 'js' };
   }
@@ -4759,7 +4836,7 @@ function makePluginCtx(runtime) {
       get(key, fallback) {
         try {
           const raw = localStorage.getItem(storagePrefix + key);
-          return raw === null ? fallback : JSON.parse(raw);
+          return safeParse(raw, fallback);
         } catch (err) {
           return fallback;
         }
@@ -4864,7 +4941,7 @@ function makePluginCtx(runtime) {
         get(key, fallback) {
           try {
             const raw = localStorage.getItem(String(key));
-            return raw === null ? fallback : JSON.parse(raw);
+            return safeParse(raw, fallback);
           } catch (err) { return fallback; }
         },
         set(key, value) {
@@ -5486,7 +5563,7 @@ async function discoverPlugins(opts = {}) {
     const text = await fetchPluginText(url);
     if (!text) continue;
     try {
-      const data = JSON.parse(text);
+      const data = safeParse(text, null);
       const list = Array.isArray(data) ? data : (Array.isArray(data.plugins) ? data.plugins : []);
       for (const item of list) {
         if (typeof item === 'string') found.set(new URL(item, location.href).href, true);
@@ -5850,6 +5927,7 @@ function sandboxBridgeSource(runtime) {
   }
 
   window.addEventListener('message', function(event) {
+    if (event.source !== parent) return;
     var data = event.data;
     if (!data || data.__mirage !== 1 || data.token !== TOKEN) return;
     if (data.kind === 'reply') {
@@ -6210,7 +6288,7 @@ async function sandboxHandleCall(runtime, message) {
         let value = null;
         try {
           const raw = localStorage.getItem('mirage.plugin.' + id + '.' + String(params.key || ''));
-          value = raw === null ? null : JSON.parse(raw);
+          value = safeParse(raw, null);
         } catch (err) { value = null; }
         reply(true, value);
         return;
@@ -6318,11 +6396,22 @@ async function sandboxHandleCall(runtime, message) {
 }
 
 /* 全局消息入口：按 token 找到插件，再按 kind 分流 */
+function sandboxOwnsSource(runtime, source) {
+  if (!source) return false;
+  if (runtime.frame && runtime.frame.contentWindow === source) return true;
+  for (const target of runtime.frameTargets.values()) {
+    if (target && target.contentWindow === source) return true;
+  }
+  return false;
+}
+
 async function handleSandboxMessage(event) {
+  if (event.origin !== 'null' && event.origin !== location.origin) return;
   const data = event.data;
   if (!data || data.__mirage !== 1) return;
   const runtime = sandboxRuntimeByToken(data.token);
   if (!runtime) return;
+  if (!sandboxOwnsSource(runtime, event.source)) return;
 
   if (data.kind === 'reply') {
     const slot = runtime.pending.get(data.seq);
@@ -7457,6 +7546,8 @@ async function boot() {
     if (embedded && embedded.settings) {
       settings = { ...DEFAULT_SETTINGS, ...embedded.settings };
       if (!WALLPAPERS.some((wp) => wp.id === settings.wallpaper)) settings.wallpaper = DEFAULT_SETTINGS.wallpaper;
+      settings.motion = settings.motion !== false;
+      settings.performance = settings.performance === true;
       applySettings();
     }
     setBootProgress(32, embedded ? '正在载入内嵌应用…' : '正在初始化桌面环境…');
